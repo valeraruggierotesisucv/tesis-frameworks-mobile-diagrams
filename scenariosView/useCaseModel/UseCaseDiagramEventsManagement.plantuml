@@ -1,4 +1,4 @@
-@startuml UseCaseDiagramUserManagement
+@startuml UseCaseDiagramEventsManagement
     left to right direction
     actor "Usuario" as usuario
     rectangle "Eventify" {
