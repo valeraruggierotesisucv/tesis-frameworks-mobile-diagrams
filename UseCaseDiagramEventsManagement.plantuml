@@ -1,0 +1,29 @@
+@startuml UseCaseDiagramUserManagement
+    left to right direction
+    actor "Usuario" as usuario
+    rectangle "Eventify" {
+        package "Gestión de Eventos" {
+            usecase "UC19 - Buscar evento" as buscarEvento
+            usecase "UC20 - Publicar evento" as publicarEvento
+            usecase "UC21 - Editar evento" as editarEvento
+            usecase "UC22 - Ver detalles del evento" as verDetallesEvento
+            usecase "UC23 - Subir imagen al Evento" as subirImagenEvento
+            usecase "UC24 - Subir música al Evento" as subirMusicaEvento
+            usecase "UC25 - Agregar ubicación al Evento" as agregarUbicacionEvento
+            usecase "UC26 - Eliminar imagen del Evento" as eliminarImagenEvento
+            usecase "UC27 - Editar música del Evento" as editarMusicaEvento
+            usecase "UC28 - Editar ubicación del Evento" as editarUbicacionEvento
+        }
+    }
+
+    usuario -- buscarEvento
+    usuario -- publicarEvento
+    usuario -- editarEvento
+    usuario -- verDetallesEvento
+    usuario -- subirImagenEvento
+    usuario -- subirMusicaEvento
+    usuario -- agregarUbicacionEvento
+    usuario -- eliminarImagenEvento
+    usuario -- editarMusicaEvento
+    usuario -- editarUbicacionEvento
+@enduml

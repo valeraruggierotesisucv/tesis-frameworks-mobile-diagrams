@@ -1,0 +1,17 @@
+@startuml UseCaseDiagramAutentication
+    left to right direction
+    actor "Usuario" as usuario
+    rectangle "Eventify" {
+        package "Autenticación" {
+            usecase "UC1 - Registrar Usuario" as registrar
+            usecase "UC2 - Iniciar Sesión" as iniciarSesion
+            usecase "UC3 - Recuperar Contraseña" as recuperarContraseña
+            usecase "UC4 - Cerrar Sesion" as cerrarSesion
+        }
+    }
+
+    usuario -- registrar
+    usuario -- iniciarSesion
+    usuario -- recuperarContraseña
+    usuario -- cerrarSesion
+@enduml

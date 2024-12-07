@@ -1,0 +1,21 @@
+@startuml UseCaseDiagramUserManagement
+    left to right direction
+    actor "Usuario" as usuario
+    rectangle "Eventify" {
+        package "Gestión de Usuario" {
+            usecase "UC5 - Ver perfil de usuario" as verPerfil
+            usecase "UC6 - Editar perfil" as editarPerfil
+            usecase "UC7 - Cambiar idioma" as cambiarIdioma
+            usecase "UC8 - Cambiar contraseña" as cambiarContrasena
+            usecase "UC9 - Ver seguidos" as verSeguidos
+            usecase "UC10 - Ver seguidores" as verSeguidores
+        }
+    }
+
+    usuario -- verPerfil
+    usuario -- editarPerfil
+    usuario -- cambiarIdioma
+    usuario -- cambiarContrasena
+    usuario -- verSeguidos
+    usuario -- verSeguidores
+@enduml

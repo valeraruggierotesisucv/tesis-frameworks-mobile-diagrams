@@ -1,0 +1,15 @@
+@startuml UseCaseDiagramPackages
+    left to right direction
+    actor "Usuario" as usuario
+    rectangle "Eventify" {
+        package "Autenticación"
+        package "Gestión de Usuario"
+        package "Interacciones Sociales"
+        package "Gestión de Eventos"
+    }
+
+    usuario -- "Autenticación"
+    usuario -- "Gestión de Usuario"
+    usuario -- "Interacciones Sociales"
+    usuario -- "Gestión de Eventos"
+@enduml

@@ -1,0 +1,25 @@
+@startuml UseCaseDiagramSocialInteractions
+    left to right direction
+    actor "Usuario" as usuario
+    rectangle "Eventify" {
+        package "Interacciones Sociales" {
+            usecase "UC11 - Seguir usuario" as seguirUsuario
+            usecase "UC12 - Dejar de seguir usuario" as dejarSeguirUsuario
+            usecase "UC13 - Ver notificaciones" as verNotificaciones
+            usecase "UC14 - Buscar perfil de usuario" as buscarPerfil
+            usecase "UC15 - Dar Me gusta a un evento" as darMeGusta
+            usecase "UC16 - Quitar Me gusta a un evento" as quitarMeGusta
+            usecase "UC17 - Compartir un evento" as compartirEvento
+            usecase "UC18 - Comentar un evento" as comentarEvento
+        }
+    }
+
+    usuario -- seguirUsuario
+    usuario -- dejarSeguirUsuario   
+    usuario -- verNotificaciones
+    usuario -- buscarPerfil
+    usuario -- darMeGusta
+    usuario -- quitarMeGusta
+    usuario -- compartirEvento
+    usuario -- comentarEvento
+@enduml
