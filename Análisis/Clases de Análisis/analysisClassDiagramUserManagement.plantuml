@@ -1,0 +1,40 @@
+@startuml analysisClassDiagramUserManagement
+skinparam style strictuml
+left to right direction
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 11
+
+actor "User" as user
+
+entity "UserModel" as userModel
+
+boundary "ProfileView" as profileView
+boundary "EditProfileView" as editProfileView
+boundary "ConfigurationView" as configurationView
+boundary "ListUsersView" as listUsersView
+
+
+control "ProfileController" as profileController
+control "EditProfileController" as editProfileController
+control "ChangeLanguageController" as changeLanguageController
+control "ChangePasswordController" as changePasswordController
+control "ListUsersController" as listUsersController
+
+user --> profileView
+user --> editProfileView
+user --> configurationView
+user --> listUsersView
+
+profileView --> profileController
+editProfileView --> editProfileController
+configurationView --> changeLanguageController
+configurationView --> changePasswordController
+listUsersView --> listUsersController
+
+profileController --> userModel
+editProfileController --> userModel
+changeLanguageController --> userModel
+changePasswordController --> userModel
+listUsersController --> userModel
+
+@enduml

@@ -1,0 +1,37 @@
+@startuml analysisClassDiagramAuthentication
+skinparam style strictuml
+left to right direction
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 11
+
+
+actor "User" as user
+
+entity "UserModel" as userModel
+
+boundary "SignUpView" as signUpView
+boundary "LoginView" as loginView
+boundary "ForgotPasswordView" as forgotPasswordView
+boundary "LogoutView" as logoutView
+
+control "SignUpController" as signUpController
+control "LoginController" as loginController
+control "ForgotPasswordController" as forgotPasswordController
+control "LogoutController" as logoutController
+
+user --> signUpView
+user --> loginView
+user --> forgotPasswordView
+user --> logoutView 
+
+signUpView --> signUpController
+loginView --> loginController
+forgotPasswordView --> forgotPasswordController
+logoutView --> logoutController
+
+signUpController --> userModel
+loginController --> userModel
+forgotPasswordController --> userModel
+logoutController --> userModel
+
+@enduml

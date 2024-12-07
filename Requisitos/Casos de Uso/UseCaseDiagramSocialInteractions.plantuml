@@ -7,8 +7,8 @@
             usecase "UC12 - Dejar de seguir usuario" as dejarSeguirUsuario
             usecase "UC13 - Ver notificaciones" as verNotificaciones
             usecase "UC14 - Buscar perfil de usuario" as buscarPerfil
-            usecase "UC15 - Dar Me gusta a un evento" as darMeGusta
-            usecase "UC16 - Quitar Me gusta a un evento" as quitarMeGusta
+            usecase "UC15 - Dar 'Me gusta' a un evento" as darMeGusta
+            usecase "UC16 - Quitar 'Me gusta' a un evento" as quitarMeGusta
             usecase "UC17 - Compartir un evento" as compartirEvento
             usecase "UC18 - Comentar un evento" as comentarEvento
         }

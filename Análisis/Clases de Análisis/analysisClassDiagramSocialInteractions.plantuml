@@ -1,0 +1,53 @@
+@startuml analysisClassDiagramSocialInteractions
+skinparam style strictuml
+left to right direction
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 11
+
+actor "User" as user
+
+entity "UserModel" as userModel
+entity "EventModel" as eventModel
+entity "SocialInteractionModel" as socialInteractionModel
+entity "CommentModel" as commentModel
+entity "FollowUserModel" as followUserModel
+entity "NotificationModel" as notificationModel
+
+boundary "EventDetailsView" as eventDetailsView
+boundary "ProfileView" as profileView
+boundary "NotificationsView" as notificationsView
+boundary "SearchView" as searchView
+
+control "CommentEventController" as commentEventController
+control "LikeEventController" as likeEventController
+control "DislikeEventController" as dislikeEventController
+control "ShareEventController" as shareEventController
+control "FollowUserController" as followUserController
+control "UnfollowUserController" as unfollowUserController
+control "NotificationsController" as notificationsController
+control "SearchProfileController" as searchProfileController
+
+user --> eventDetailsView
+user --> profileView
+user --> notificationsView
+user --> searchView
+
+eventDetailsView --> commentEventController
+eventDetailsView --> likeEventController
+eventDetailsView --> dislikeEventController
+eventDetailsView --> shareEventController
+profileView --> followUserController
+profileView --> unfollowUserController
+notificationsView --> notificationsController
+searchView --> searchProfileController
+
+commentEventController --> commentModel
+likeEventController --> socialInteractionModel
+dislikeEventController --> socialInteractionModel
+shareEventController --> eventModel
+followUserController --> followUserModel
+unfollowUserController --> followUserModel
+notificationsController --> notificationModel
+searchProfileController --> userModel
+
+@enduml

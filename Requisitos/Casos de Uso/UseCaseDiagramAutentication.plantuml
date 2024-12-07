@@ -6,7 +6,7 @@
             usecase "UC1 - Registrar Usuario" as registrar
             usecase "UC2 - Iniciar Sesión" as iniciarSesion
             usecase "UC3 - Recuperar Contraseña" as recuperarContraseña
-            usecase "UC4 - Cerrar Sesion" as cerrarSesion
+            usecase "UC4 - Cerrar Sesión" as cerrarSesion
         }
     }
 

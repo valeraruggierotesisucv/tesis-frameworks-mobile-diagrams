@@ -1,0 +1,59 @@
+@startuml analysisClassDiagramEventsManagements
+skinparam style strictuml
+left to right direction
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 11
+
+actor "User" as user
+
+entity "EventModel" as eventModel
+
+boundary "PostEventView" as postEventView
+boundary "EditEventView" as editEventView
+boundary "EventDetailsView" as eventDetailsView
+boundary "SearchView" as searchView
+boundary "ListEventsView" as listEventsView
+
+control "PostEventController" as postEventController
+control "UploadImageController" as uploadImageController
+control "UploadMusicController" as uploadMusicController
+control "UploadLocationController" as uploadLocationController
+control "EditEventController" as editEventController
+control "DeleteImageController" as deleteImageController
+control "EditMusicController" as editMusicController
+control "EditLocationController" as editLocationController
+control "EventDetailsController" as eventDetailsController
+control "SearchEventController" as searchEventController
+control "ListEventsController" as listEventsController
+
+user --> postEventView
+user --> editEventView
+user --> eventDetailsView
+user --> searchView
+user --> listEventsView
+
+postEventView --> postEventController
+postEventView --> uploadImageController
+postEventView --> uploadMusicController
+postEventView --> uploadLocationController
+editEventView --> editEventController
+editEventView --> deleteImageController
+editEventView --> editMusicController
+editEventView --> editLocationController
+eventDetailsView --> eventDetailsController
+searchView --> searchEventController
+listEventsView --> listEventsController
+
+postEventController --> eventModel
+uploadImageController --> eventModel
+uploadMusicController --> eventModel
+uploadLocationController --> eventModel
+deleteImageController --> eventModel
+editMusicController --> eventModel
+editLocationController --> eventModel
+editEventController --> eventModel
+eventDetailsController --> eventModel
+searchEventController --> eventModel
+listEventsController --> eventModel
+
+@enduml
