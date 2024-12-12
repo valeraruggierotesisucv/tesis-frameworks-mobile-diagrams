@@ -19,7 +19,7 @@ control "UploadImageController" as uploadImageController
 control "UploadMusicController" as uploadMusicController
 control "UploadLocationController" as uploadLocationController
 control "EditEventController" as editEventController
-control "DeleteImageController" as deleteImageController
+control "EditImageController" as editImageController
 control "EditMusicController" as editMusicController
 control "EditLocationController" as editLocationController
 control "EventDetailsController" as eventDetailsController
@@ -37,7 +37,7 @@ postEventView --> uploadImageController
 postEventView --> uploadMusicController
 postEventView --> uploadLocationController
 editEventView --> editEventController
-editEventView --> deleteImageController
+editEventView --> editImageController
 editEventView --> editMusicController
 editEventView --> editLocationController
 eventDetailsView --> eventDetailsController
@@ -48,7 +48,7 @@ postEventController --> eventModel
 uploadImageController --> eventModel
 uploadMusicController --> eventModel
 uploadLocationController --> eventModel
-deleteImageController --> eventModel
+editImageController --> eventModel
 editMusicController --> eventModel
 editLocationController --> eventModel
 editEventController --> eventModel
