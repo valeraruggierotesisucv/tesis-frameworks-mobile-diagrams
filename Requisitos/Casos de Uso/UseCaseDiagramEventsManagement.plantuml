@@ -11,8 +11,8 @@
             usecase "UC24 - Subir música al Evento" as subirMusicaEvento
             usecase "UC25 - Agregar ubicación al Evento" as agregarUbicacionEvento
             usecase "UC26 - Editar imagen del Evento" as eliminarImagenEvento
-            usecase "UC27 - Editar música del Evento" as editarMusicaEvento
-            usecase "UC28 - Editar ubicación del Evento" as editarUbicacionEvento
+            usecase "UC27 - Eliminar música del Evento" as editarMusicaEvento
+            usecase "UC28 - Eliminar ubicación del Evento" as editarUbicacionEvento
         }
     }
 

@@ -20,8 +20,8 @@ control "UploadMusicController" as uploadMusicController
 control "UploadLocationController" as uploadLocationController
 control "EditEventController" as editEventController
 control "EditImageController" as editImageController
-control "EditMusicController" as editMusicController
-control "EditLocationController" as editLocationController
+control "DeleteMusicController" as deleteMusicController
+control "DeleteLocationController" as deleteLocationController
 control "EventDetailsController" as eventDetailsController
 control "SearchEventController" as searchEventController
 control "ListEventsController" as listEventsController
@@ -38,8 +38,8 @@ postEventView --> uploadMusicController
 postEventView --> uploadLocationController
 editEventView --> editEventController
 editEventView --> editImageController
-editEventView --> editMusicController
-editEventView --> editLocationController
+editEventView --> deleteMusicController
+editEventView --> deleteLocationController
 eventDetailsView --> eventDetailsController
 searchView --> searchEventController
 listEventsView --> listEventsController
@@ -49,8 +49,8 @@ uploadImageController --> eventModel
 uploadMusicController --> eventModel
 uploadLocationController --> eventModel
 editImageController --> eventModel
-editMusicController --> eventModel
-editLocationController --> eventModel
+deleteMusicController --> eventModel
+deleteLocationController --> eventModel
 editEventController --> eventModel
 eventDetailsController --> eventModel
 searchEventController --> eventModel
