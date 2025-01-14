@@ -8,15 +8,14 @@ actor "User" as user
 
 entity "EventModel" as eventModel
 
-boundary "PostEventView" as postEventView
+boundary "AddEventView" as addEventView
 boundary "EditEventView" as editEventView
 boundary "EventDetailsView" as eventDetailsView
 boundary "SearchView" as searchView
 boundary "ListEventsView" as listEventsView
 
-control "PostEventController" as postEventController
-control "UploadImageController" as uploadImageController
-control "UploadMusicController" as uploadMusicController
+control "AddEventController" as addEventController
+control "UploadFileController" as uploadFileController
 control "UploadLocationController" as uploadLocationController
 control "EditEventController" as editEventController
 control "EditImageController" as editImageController
@@ -26,16 +25,15 @@ control "EventDetailsController" as eventDetailsController
 control "SearchEventController" as searchEventController
 control "ListEventsController" as listEventsController
 
-user --> postEventView
+user --> addEventView
 user --> editEventView
 user --> eventDetailsView
 user --> searchView
 user --> listEventsView
 
-postEventView --> postEventController
-postEventView --> uploadImageController
-postEventView --> uploadMusicController
-postEventView --> uploadLocationController
+addEventView --> addEventController
+addEventView --> uploadFileController
+addEventView --> uploadLocationController
 editEventView --> editEventController
 editEventView --> editImageController
 editEventView --> deleteMusicController
@@ -44,9 +42,8 @@ eventDetailsView --> eventDetailsController
 searchView --> searchEventController
 listEventsView --> listEventsController
 
-postEventController --> eventModel
-uploadImageController --> eventModel
-uploadMusicController --> eventModel
+addEventController --> eventModel
+uploadFileController --> eventModel
 uploadLocationController --> eventModel
 editImageController --> eventModel
 deleteMusicController --> eventModel
