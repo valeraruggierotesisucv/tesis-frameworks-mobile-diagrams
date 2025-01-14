@@ -13,7 +13,6 @@ boundary "EditProfileView" as editProfileView
 boundary "ConfigurationView" as configurationView
 boundary "ListUsersView" as listUsersView
 
-
 control "ProfileController" as profileController
 control "EditProfileController" as editProfileController
 control "ChangeLanguageController" as changeLanguageController
