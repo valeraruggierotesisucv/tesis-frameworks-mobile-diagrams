@@ -36,7 +36,6 @@ eventDetailsView --> commentEventController
 eventDetailsView --> likeEventController
 eventDetailsView --> shareEventController
 profileView --> followUserController
-profileView --> unfollowUserController
 notificationsView --> notificationsController
 searchView --> searchProfileController
 
@@ -44,7 +43,6 @@ commentEventController --> commentModel
 likeEventController --> socialInteractionModel
 shareEventController --> eventModel
 followUserController --> followUserModel
-unfollowUserController --> followUserModel
 notificationsController --> notificationModel
 searchProfileController --> userModel
 
