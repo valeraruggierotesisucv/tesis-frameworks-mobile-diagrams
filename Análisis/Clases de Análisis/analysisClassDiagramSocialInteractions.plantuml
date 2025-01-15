@@ -20,10 +20,8 @@ boundary "SearchView" as searchView
 
 control "CommentEventController" as commentEventController
 control "LikeEventController" as likeEventController
-control "DislikeEventController" as dislikeEventController
 control "ShareEventController" as shareEventController
 control "FollowUserController" as followUserController
-control "UnfollowUserController" as unfollowUserController
 control "NotificationsController" as notificationsController
 control "SearchProfileController" as searchProfileController
 

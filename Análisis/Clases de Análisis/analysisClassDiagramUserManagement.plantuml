@@ -13,29 +13,32 @@ boundary "EditProfileView" as editProfileView
 boundary "ConfigurationView" as configurationView
 boundary "ListUsersView" as listUsersView
 boundary "ChangePasswordView" as changePasswordView
-
+boundary "LogoutView" as logoutView
 control "ProfileController" as profileController
 control "EditProfileController" as editProfileController
 control "ChangeLanguageController" as changeLanguageController
 control "ChangePasswordController" as changePasswordController
 control "ListUsersController" as listUsersController
+control "LogoutController" as logoutController
 
 user --> profileView
 user --> editProfileView
 user --> configurationView
 user --> listUsersView
 user --> changePasswordView
+user --> logoutView
 
 profileView --> profileController
 editProfileView --> editProfileController
 configurationView --> changeLanguageController
+logoutView --> logoutController
 changePasswordView --> changePasswordController
 listUsersView --> listUsersController
-
 profileController --> userModel
 editProfileController --> userModel
 changeLanguageController --> userModel
 changePasswordController --> userModel
 listUsersController --> userModel
+logoutController --> userModel
 
 @enduml
