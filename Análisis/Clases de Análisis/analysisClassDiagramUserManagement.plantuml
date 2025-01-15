@@ -12,6 +12,7 @@ boundary "ProfileView" as profileView
 boundary "EditProfileView" as editProfileView
 boundary "ConfigurationView" as configurationView
 boundary "ListUsersView" as listUsersView
+boundary "ChangePasswordView" as changePasswordView
 
 control "ProfileController" as profileController
 control "EditProfileController" as editProfileController
@@ -23,11 +24,12 @@ user --> profileView
 user --> editProfileView
 user --> configurationView
 user --> listUsersView
+user --> changePasswordView
 
 profileView --> profileController
 editProfileView --> editProfileController
 configurationView --> changeLanguageController
-configurationView --> changePasswordController
+changePasswordView --> changePasswordController
 listUsersView --> listUsersController
 
 profileController --> userModel
