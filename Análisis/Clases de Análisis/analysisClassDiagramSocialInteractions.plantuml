@@ -14,7 +14,7 @@ entity "FollowUserModel" as followUserModel
 entity "NotificationModel" as notificationModel
 
 boundary "EventDetailsView" as eventDetailsView
-boundary "ProfileView" as profileView
+boundary "ProfileDetailsView" as profileDetailsView
 boundary "NotificationsView" as notificationsView
 boundary "SearchView" as searchView
 
@@ -24,19 +24,27 @@ control "ShareEventController" as shareEventController
 control "FollowUserController" as followUserController
 control "NotificationsController" as notificationsController
 control "SearchProfileController" as searchProfileController
+control "EventDetailsController" as eventDetailsController
+control "ProfileController" as profileController
 
 user --> eventDetailsView
-user --> profileView
+user --> profileDetailsView
 user --> notificationsView
 user --> searchView
 
+eventDetailsView --> eventDetailsController
 eventDetailsView --> commentEventController
 eventDetailsView --> likeEventController
 eventDetailsView --> shareEventController
-profileView --> followUserController
+eventDetailsView --> profileController
+profileDetailsView --> followUserController
 notificationsView --> notificationsController
 searchView --> searchProfileController
+profileDetailsView --> profileController
 
+
+profileController --> userModel
+eventDetailsController --> eventModel
 commentEventController --> commentModel
 likeEventController --> socialInteractionModel
 shareEventController --> eventModel

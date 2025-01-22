@@ -9,29 +9,23 @@ actor "User" as user
 
 entity "UserModel" as userModel
 
-boundary "SignUpView" as signUpView
-boundary "LoginView" as loginView
+boundary "AuthView" as authView
 boundary "ForgotPasswordView" as forgotPasswordView
-boundary "LogoutView" as logoutView
 
 control "SignUpController" as signUpController
 control "LoginController" as loginController
 control "ForgotPasswordController" as forgotPasswordController
-control "LogoutController" as logoutController
 
-user --> signUpView
-user --> loginView
+user --> authView
 user --> forgotPasswordView
-user --> logoutView 
 
-signUpView --> signUpController
-loginView --> loginController
+
+authView --> signUpController
+authView --> loginController
 forgotPasswordView --> forgotPasswordController
-logoutView --> logoutController
 
 signUpController --> userModel
 loginController --> userModel
 forgotPasswordController --> userModel
-logoutController --> userModel
 
 @enduml

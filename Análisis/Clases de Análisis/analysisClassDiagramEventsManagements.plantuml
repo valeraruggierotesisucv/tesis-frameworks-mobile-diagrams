@@ -6,13 +6,15 @@ skinparam defaultFontSize 11
 
 actor "User" as user
 
+entity "UserModel" as userModel
 entity "EventModel" as eventModel
+entity "CommentModel" as commentModel
 
 boundary "AddEventView" as addEventView
 boundary "EditEventView" as editEventView
 boundary "EventDetailsView" as eventDetailsView
 boundary "SearchView" as searchView
-boundary "ListEventsView" as listEventsView
+boundary "HomeView" as homeView
 
 control "AddEventController" as addEventController
 control "UploadFileController" as uploadFileController
@@ -24,12 +26,14 @@ control "DeleteLocationController" as deleteLocationController
 control "EventDetailsController" as eventDetailsController
 control "SearchEventController" as searchEventController
 control "ListEventsController" as listEventsController
+control "CommentEventController" as commentEventController
+control "ProfileController" as profileController
 
 user --> addEventView
 user --> editEventView
 user --> eventDetailsView
 user --> searchView
-user --> listEventsView
+user --> homeView
 
 addEventView --> addEventController
 addEventView --> uploadFileController
@@ -39,8 +43,11 @@ editEventView --> editImageController
 editEventView --> deleteMusicController
 editEventView --> deleteLocationController
 eventDetailsView --> eventDetailsController
+eventDetailsView --> commentEventController
 searchView --> searchEventController
-listEventsView --> listEventsController
+homeView --> listEventsController
+homeView --> profileController
+homeView --> commentEventController
 
 addEventController --> eventModel
 uploadFileController --> eventModel
@@ -52,5 +59,7 @@ editEventController --> eventModel
 eventDetailsController --> eventModel
 searchEventController --> eventModel
 listEventsController --> eventModel
+commentEventController --> commentModel
+profileController --> userModel
 
 @enduml

@@ -7,38 +7,50 @@ skinparam defaultFontSize 11
 actor "User" as user
 
 entity "UserModel" as userModel
+entity "FollowUserModel" as followUserModel
 
 boundary "ProfileView" as profileView
 boundary "EditProfileView" as editProfileView
 boundary "ConfigurationView" as configurationView
-boundary "ListUsersView" as listUsersView
 boundary "ChangePasswordView" as changePasswordView
-boundary "LogoutView" as logoutView
+boundary "FollowersView" as followersView
+boundary "FollowedView" as followedView
+
 control "ProfileController" as profileController
 control "EditProfileController" as editProfileController
 control "ChangeLanguageController" as changeLanguageController
 control "ChangePasswordController" as changePasswordController
 control "ListUsersController" as listUsersController
 control "LogoutController" as logoutController
+control "UploadFileController" as uploadFileController
+control "LogoutController" as logoutController
+control "FollowUserController" as followUserController
 
 user --> profileView
 user --> editProfileView
 user --> configurationView
-user --> listUsersView
 user --> changePasswordView
-user --> logoutView
+user --> followersView
+user --> followedView
 
 profileView --> profileController
 editProfileView --> editProfileController
+editProfileView --> uploadFileController
 configurationView --> changeLanguageController
-logoutView --> logoutController
+configurationView --> logoutController
 changePasswordView --> changePasswordController
-listUsersView --> listUsersController
+followersView --> listUsersController
+followedView --> listUsersController
+followersView --> followUserController
+followedView --> followUserController
+
 profileController --> userModel
 editProfileController --> userModel
 changeLanguageController --> userModel
 changePasswordController --> userModel
 listUsersController --> userModel
 logoutController --> userModel
+uploadFileController --> userModel
+followUserController --> followUserModel
 
 @enduml
