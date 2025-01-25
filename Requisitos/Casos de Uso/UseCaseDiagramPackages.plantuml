@@ -3,13 +3,13 @@
     actor "Usuario" as usuario
     rectangle "Eventify" {
         package "Autenticación"
-        package "Gestión de Usuario"
-        package "Interacciones Sociales"
         package "Gestión de Eventos"
+        package "Interacciones Sociales"
+        package "Gestión de Usuario"
     }
 
     usuario -- "Autenticación"
+    usuario -- "Gestión de Eventos"
     usuario -- "Gestión de Usuario"
     usuario -- "Interacciones Sociales"
-    usuario -- "Gestión de Eventos"
 @enduml

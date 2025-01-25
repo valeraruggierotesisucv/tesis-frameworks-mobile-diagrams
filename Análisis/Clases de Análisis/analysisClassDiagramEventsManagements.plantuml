@@ -9,6 +9,10 @@ actor "User" as user
 entity "UserModel" as userModel
 entity "EventModel" as eventModel
 entity "CommentModel" as commentModel
+entity "NotificationModel" as notificationModel
+entity "CategoriesModel" as categoriesModel
+entity "SocialInteractionModel" as socialInteractionModel
+entity "LocationModel" as locationModel
 
 boundary "AddEventView" as addEventView
 boundary "EditEventView" as editEventView
@@ -16,18 +20,23 @@ boundary "EventDetailsView" as eventDetailsView
 boundary "SearchView" as searchView
 boundary "HomeView" as homeView
 
+
+control "CategoriesController" as categoriesController
+control "LikeEventController" as likeEventController
+control "NotificationsController" as notificationController
+control "ShareEventController" as shareEventController
+control "CommentEventController" as commentEventController
+control "ProfileController" as profileController
+control "FileController" as fileController
 control "AddEventController" as addEventController
-control "UploadFileController" as uploadFileController
-control "UploadLocationController" as uploadLocationController
+control "LocationController" as locationController
 control "EditEventController" as editEventController
-control "EditImageController" as editImageController
-control "DeleteMusicController" as deleteMusicController
-control "DeleteLocationController" as deleteLocationController
 control "EventDetailsController" as eventDetailsController
 control "SearchEventController" as searchEventController
 control "ListEventsController" as listEventsController
 control "CommentEventController" as commentEventController
 control "ProfileController" as profileController
+control "EventDetailsController" as eventDetailsController
 
 user --> addEventView
 user --> editEventView
@@ -36,30 +45,44 @@ user --> searchView
 user --> homeView
 
 addEventView --> addEventController
-addEventView --> uploadFileController
-addEventView --> uploadLocationController
+addEventView --> locationController
+addEventView --> fileController
 editEventView --> editEventController
-editEventView --> editImageController
-editEventView --> deleteMusicController
-editEventView --> deleteLocationController
+editEventView --> eventDetailsController
+editEventView --> fileController
+editEventView --> locationController
+
 eventDetailsView --> eventDetailsController
 eventDetailsView --> commentEventController
+eventDetailsView --> likeEventController
+eventDetailsView --> profileController
+eventDetailsView --> shareEventController
+eventDetailsView --> notificationController
 searchView --> searchEventController
+searchView --> categoriesController
+searchView --> likeEventController
+searchView --> notificationController
+searchView --> shareEventController
+searchView --> profileController
+searchView --> commentEventController
 homeView --> listEventsController
 homeView --> profileController
 homeView --> commentEventController
+homeView --> likeEventController
+homeView --> notificationController
+homeView --> shareEventController
 
 addEventController --> eventModel
-uploadFileController --> eventModel
-uploadLocationController --> eventModel
-editImageController --> eventModel
-deleteMusicController --> eventModel
-deleteLocationController --> eventModel
+fileController --> eventModel
+locationController --> locationModel
 editEventController --> eventModel
 eventDetailsController --> eventModel
 searchEventController --> eventModel
 listEventsController --> eventModel
 commentEventController --> commentModel
 profileController --> userModel
+categoriesController --> categoriesModel
+likeEventController --> socialInteractionModel
+notificationController --> notificationModel
 
 @enduml

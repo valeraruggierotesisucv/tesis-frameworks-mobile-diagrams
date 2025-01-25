@@ -3,12 +3,12 @@
     actor "Usuario" as usuario
     rectangle "Eventify" {
         package "Gestión de Usuario" {
-            usecase "UC5 - Ver perfil de usuario" as verPerfil
-            usecase "UC6 - Editar perfil" as editarPerfil
-            usecase "UC7 - Cambiar idioma" as cambiarIdioma
-            usecase "UC8 - Cambiar contraseña" as cambiarContrasena
-            usecase "UC9 - Ver seguidos" as verSeguidos
-            usecase "UC10 - Ver seguidores" as verSeguidores
+            usecase "UC23 - Ver perfil de usuario" as verPerfil
+            usecase "UC24 - Editar perfil" as editarPerfil
+            usecase "UC25 - Cambiar idioma" as cambiarIdioma
+            usecase "UC26 - Cambiar contraseña" as cambiarContrasena
+            usecase "UC27 - Ver seguidos" as verSeguidos
+            usecase "UC28 - Ver seguidores" as verSeguidores
         }
     }
 

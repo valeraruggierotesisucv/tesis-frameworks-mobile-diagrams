@@ -12,6 +12,7 @@ entity "SocialInteractionModel" as socialInteractionModel
 entity "CommentModel" as commentModel
 entity "FollowUserModel" as followUserModel
 entity "NotificationModel" as notificationModel
+entity "NotificationModel" as notificationModel
 
 boundary "EventDetailsView" as eventDetailsView
 boundary "ProfileDetailsView" as profileDetailsView
@@ -23,9 +24,10 @@ control "LikeEventController" as likeEventController
 control "ShareEventController" as shareEventController
 control "FollowUserController" as followUserController
 control "NotificationsController" as notificationsController
-control "SearchProfileController" as searchProfileController
 control "EventDetailsController" as eventDetailsController
 control "ProfileController" as profileController
+control "SearchUserController" as searchUserController
+control "NotificationController" as notificationController
 
 user --> eventDetailsView
 user --> profileDetailsView
@@ -37,9 +39,12 @@ eventDetailsView --> commentEventController
 eventDetailsView --> likeEventController
 eventDetailsView --> shareEventController
 eventDetailsView --> profileController
+eventDetailsView --> notificationController
+
 profileDetailsView --> followUserController
+profileDetailsView --> notificationsController
 notificationsView --> notificationsController
-searchView --> searchProfileController
+searchView --> searchUserController
 profileDetailsView --> profileController
 
 
@@ -50,6 +55,7 @@ likeEventController --> socialInteractionModel
 shareEventController --> eventModel
 followUserController --> followUserModel
 notificationsController --> notificationModel
-searchProfileController --> userModel
+searchUserController --> userModel
+notificationController --> notificationModel
 
 @enduml

@@ -8,6 +8,7 @@ actor "User" as user
 
 entity "UserModel" as userModel
 entity "FollowUserModel" as followUserModel
+entity "NotificationModel" as notificationModel
 
 boundary "ProfileView" as profileView
 boundary "EditProfileView" as editProfileView
@@ -22,9 +23,10 @@ control "ChangeLanguageController" as changeLanguageController
 control "ChangePasswordController" as changePasswordController
 control "ListUsersController" as listUsersController
 control "LogoutController" as logoutController
-control "UploadFileController" as uploadFileController
+control "FileController" as fileController
 control "LogoutController" as logoutController
 control "FollowUserController" as followUserController
+control "NotificationsController" as notificationsController
 
 user --> profileView
 user --> editProfileView
@@ -35,22 +37,23 @@ user --> followedView
 
 profileView --> profileController
 editProfileView --> editProfileController
-editProfileView --> uploadFileController
+editProfileView --> fileController
 configurationView --> changeLanguageController
 configurationView --> logoutController
 changePasswordView --> changePasswordController
 followersView --> listUsersController
-followedView --> listUsersController
 followersView --> followUserController
+followersView --> notificationsController
+followedView --> listUsersController
 followedView --> followUserController
-
 profileController --> userModel
 editProfileController --> userModel
 changeLanguageController --> userModel
 changePasswordController --> userModel
 listUsersController --> userModel
 logoutController --> userModel
-uploadFileController --> userModel
+fileController --> userModel
 followUserController --> followUserModel
+notificationsController --> notificationModel
 
 @enduml

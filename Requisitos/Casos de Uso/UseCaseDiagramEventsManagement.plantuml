@@ -3,16 +3,16 @@
     actor "Usuario" as usuario
     rectangle "Eventify" {
         package "Gestión de Eventos" {
-            usecase "UC19 - Buscar evento" as buscarEvento
-            usecase "UC20 - Publicar evento" as publicarEvento
-            usecase "UC21 - Editar evento" as editarEvento
-            usecase "UC22 - Ver detalles del evento" as verDetallesEvento
-            usecase "UC23 - Subir imagen al Evento" as subirImagenEvento
-            usecase "UC24 - Subir música al Evento" as subirMusicaEvento
-            usecase "UC25 - Agregar ubicación al Evento" as agregarUbicacionEvento
-            usecase "UC26 - Editar imagen del Evento" as eliminarImagenEvento
-            usecase "UC27 - Eliminar música del Evento" as editarMusicaEvento
-            usecase "UC28 - Eliminar ubicación del Evento" as editarUbicacionEvento
+            usecase "UC5 - Buscar evento" as buscarEvento
+            usecase "UC6 - Publicar evento" as publicarEvento
+            usecase "UC7 - Editar evento" as editarEvento
+            usecase "UC8 - Ver detalles del evento" as verDetallesEvento
+            usecase "UC9 - Subir imagen al Evento" as subirImagenEvento
+            usecase "UC10 - Subir música al Evento" as subirMusicaEvento
+            usecase "UC11 - Agregar ubicación al Evento" as agregarUbicacionEvento
+            usecase "UC12 - Editar imagen del Evento" as eliminarImagenEvento
+            usecase "UC13 - Eliminar música del Evento" as editarMusicaEvento
+            usecase "UC14 - Eliminar ubicación del Evento" as editarUbicacionEvento
         }
     }
 
