@@ -1,0 +1,29 @@
+@startuml analysisClassDiagramUC6
+skinparam style strictuml
+left to right direction
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 11
+
+actor "User" as user
+
+entity "EventModel" as eventModel
+entity "LocationModel" as locationModel
+
+boundary "AddEventView" as addEventView
+
+control "FileController" as fileController
+control "AddEventController" as addEventController
+control "LocationController" as locationController
+
+
+user --> addEventView
+
+addEventView --> addEventController
+addEventView --> locationController
+addEventView --> fileController
+
+addEventController --> eventModel
+fileController --> eventModel
+locationController --> locationModel
+
+@enduml

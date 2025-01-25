@@ -1,0 +1,12 @@
+@startuml analysisPackageDiagram
+skinparam style strictuml
+left to right direction
+
+package Views #ffb3ba{}
+package Controllers #baffc9{}
+package Models #ffffba{}
+
+Views ..> Controllers
+Controllers ..> Models
+
+@enduml
