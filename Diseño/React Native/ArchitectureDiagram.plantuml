@@ -1,0 +1,43 @@
+@startuml architecture_design
+skinparam ComponentBackgroundColor white
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 11
+
+node "Client" as client {
+    component "React Native App" as reactNativeApp {
+        component "Expo" as expo {
+            component "expo-av"
+            component "expo-camera"
+            component "expo-device"
+            component "expo-document-picker"
+            component "expo-image-picker"
+            component "expo-localization"
+            component "expo-location"
+            component "expo-notifications"
+        }
+        component "Libraries" as libraries {
+            component "formik"
+            component "i18next"
+            component "react-native-calendar-picker"
+            component "react-native-maps"
+            component "react-native-gesture-handler"
+            component "react-native-toast-notifications"
+            component "@react-navigation"
+        }
+    }
+
+}
+
+node "Backend" as backend {
+    component "Express API" as expressAPI
+}
+
+node "Supabase" as supabase {
+    component "Authentication" as auth
+    component "File Storage" as fileStorage
+    component "PostgreSQL Database" as postgresDB
+}
+
+backend --> postgresDB : Prisma Client
+
+@enduml
