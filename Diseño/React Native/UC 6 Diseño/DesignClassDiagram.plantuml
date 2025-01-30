@@ -1,0 +1,82 @@
+@startuml DesignClassDiagram
+skinparam style strictuml
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 11
+
+actor "Authenticated\nUser" as UserReg
+
+' This is a comment on a single line
+package backend <<express:4.21.2>>{
+    control app << JavaScript >>
+    control authenticateUser << middleware >>
+    control "CreateEvent" as CreateEventController << JavaScript >>
+    control "CreateLocation" as CreateLocationController << JavaScript >>
+
+    entity Event << JavaScript >>
+    entity Location << JavaScript >>
+}
+
+package frontend {
+    boundary "AuthProvider" as AuthProvider << TSX >>
+    
+    package "Event Creation Views" {
+        boundary "AddEventView" as addEventView << TSX >>
+        boundary "AddDefaultView" as AddDefaultView << TSX >>
+        boundary "AddDateView" as AddDateView << TSX >>
+        boundary "ChooseCategoriesView" as ChooseCategoriesView << TSX >>
+        boundary "AddLocationView" as AddLocationView << TSX >>
+        
+        component "Calendar" as Calendar
+        component "MapView" as MapView
+        
+        component "MusicPicker" as MusicPicker
+        component "ImagePicker" as ImagePicker
+        component "LocationPicker" as LocationPicker
+    }
+
+    control "AddEventController" as AddEventController 
+    control "LocationController" as LocationController
+    control "FileController" as FileController
+    control "Services" as Services
+    entity "EventModel" as EventModel
+    entity "LocationModel" as LocationModel
+}
+
+' Frontend View Hierarchy
+
+AuthProvider --> addEventView 
+addEventView --> AddDefaultView 
+addEventView --> AddDateView 
+addEventView --> ChooseCategoriesView 
+addEventView --> AddLocationView 
+
+' View Components
+AddDateView --> Calendar 
+AddLocationView --> MapView 
+AddDefaultView --> MusicPicker 
+AddDefaultView --> ImagePicker 
+AddLocationView --> LocationPicker 
+
+' Controller relationships
+addEventView --> AddEventController
+addEventView --> LocationController
+addEventView --> FileController
+AddEventController --> EventModel
+LocationController --> LocationModel
+
+' User interaction
+UserReg .r.> addEventView
+
+' Backend relationships
+app -> authenticateUser
+app -d-> CreateEventController
+app -d-> CreateLocationController
+FileController --> Services
+
+CreateEventController <-d-> Event
+CreateLocationController <-d-> Location
+LocationModel -d-> app
+EventModel -d-> app
+
+
+@enduml

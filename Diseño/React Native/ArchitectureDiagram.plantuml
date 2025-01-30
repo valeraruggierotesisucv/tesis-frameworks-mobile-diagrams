@@ -3,33 +3,42 @@ skinparam ComponentBackgroundColor white
 skinparam defaultTextAlignment center
 skinparam defaultFontSize 11
 
-node "Client" as client {
+node "Mobile Device" as mobileDevice {
     component "React Native App" as reactNativeApp {
-        component "Expo" as expo {
-            component "expo-av"
-            component "expo-camera"
-            component "expo-device"
-            component "expo-document-picker"
-            component "expo-image-picker"
-            component "expo-localization"
-            component "expo-location"
-            component "expo-notifications"
+         component "JavaScript Layer" as jsLayer {
+            component "App" as app 
+            component "node_modules" as nodeModules
         }
-        component "Libraries" as libraries {
-            component "formik"
-            component "i18next"
-            component "react-native-calendar-picker"
-            component "react-native-maps"
-            component "react-native-gesture-handler"
-            component "react-native-toast-notifications"
-            component "@react-navigation"
+        
+        component "Bridge Layer" as bridgeLayer {
+            component "React Native Bridge" as bridge
         }
+        
+        component "Native Layer" as nativeLayer {
+            component "Native Modules" as nativeModules
+            component "Native UI Components" as nativeComponents
+        }
+
+         component "React Native Runtime Environment" as runtime {
+            component "Expo Runtime" as expoRuntime 
+            component "JS Engine" as jsEngine
+            component "Native Module Bindings" as moduleBindings
+        }
+        
+        ' Internal connections
+        jsLayer --> bridge
+        bridge --> nativeLayer
+        jsLayer --> runtime
+        app --> nodeModules
+        moduleBindings --> nativeModules
+        nativeComponents --> runtime
     }
 
 }
 
 node "Backend" as backend {
     component "Express API" as expressAPI
+    component "Prisma Client" as prismaClient
 }
 
 node "Supabase" as supabase {
@@ -38,6 +47,18 @@ node "Supabase" as supabase {
     component "PostgreSQL Database" as postgresDB
 }
 
-backend --> postgresDB : Prisma Client
+node "Expo Application Services (EAS)" as expoServices {
+    component "Expo Push Notifications" as expoPushNotifications
+    component "Expo Application Services Build" as expoApplicationServicesBuild
+}
+
+jsLayer <..[#000000]l..> expressAPI : <font color=000000>HTTP</font>
+prismaClient <.[#000000]u.> postgresDB
+jsLayer <.[#000000]d.> fileStorage
+jsLayer <.[#000000]d.> auth
+
+expressAPI <.[#000000]l.> prismaClient
+jsLayer <.[#000000]d.> expoPushNotifications
+jsLayer <.[#000000]d.> expoApplicationServicesBuild
 
 @enduml
