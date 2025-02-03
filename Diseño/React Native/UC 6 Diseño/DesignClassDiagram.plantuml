@@ -17,66 +17,183 @@ package backend <<express:4.21.2>>{
 }
 
 package frontend {
-    boundary "AuthProvider" as AuthProvider << TSX >>
-    
-    package "Event Creation Views" {
-        boundary "AddEventView" as addEventView << TSX >>
-        boundary "AddDefaultView" as AddDefaultView << TSX >>
-        boundary "AddDateView" as AddDateView << TSX >>
-        boundary "ChooseCategoriesView" as ChooseCategoriesView << TSX >>
-        boundary "AddLocationView" as AddLocationView << TSX >>
-        
-        component "Calendar" as Calendar
-        component "MapView" as MapView
-        
-        component "MusicPicker" as MusicPicker
-        component "ImagePicker" as ImagePicker
-        component "LocationPicker" as LocationPicker
-    }
+    boundary "AddEventView" as addEventView << TSX >>
+    boundary "AddDefaultView" as AddDefaultView << TSX >>
+    boundary "AddDateView" as AddDateView << TSX >>
+    boundary "ChooseCategoriesView" as ChooseCategoriesView << TSX >>
+    boundary "AddLocationView" as AddLocationView << TSX >>
+
+    component "react" as React << Library >>
+    component "useState" as useState << Hook >>
+    component "useCallback" as useCallback << Hook >>
+
+    component "@react-navigation/native" as ReactNavigation << Library >>
+    component "useNavigation" as useNavigation << Hook >>
+    component "useFocusEffect" as useFocusEffect << Hook >>
+
+
+    component "react-native-safe-area-context" as SafeAreaContext << Library >>
+    component "SafeAreaView" as SafeAreaView << Component >>
+
+    component "react-native" as ReactNative << Library >>
+    component "Image" as Image << Component >>
+    component "Text" as Text << Component >>
+    component "Alert" as Alert << Component >>
+    component "ScrollView" as ScrollView << Component >>
+    component "StyleSheet" as StyleSheet << Component >>
+
+    component "react-native-maps" as ReactNativeMaps << Library >>
+    component "LanLng" as LanLng << Component >>
+    component "MapView" as MapView << Component >>
+    component "Marker" as Marker << Component >>
+
+    component "react-i18next" as ReactI18next << Library >>
+    component "useTranslation" as useTranslation << Hook >>
+
+    component "react-native-toast-notifications" as ReactNativeToast << Library >>
+    component "useToast" as useToast << Hook >>
+
+    boundary "Modal" as Modal << Custom Components >>
+    boundary "AppHeader" as AppHeader << Custom Components >>
+
+    component "useCurrentLocation" as useCurrentLocation << Custom Hooks >>
+    component "useImagePicker" as useImagePicker << Custom Hooks >>
+    component "useMusicPicker" as useMusicPicker << Custom Hooks >>
+    component "useAudioRecorder" as useAudioRecorder << Custom Hooks >>
+
+    component "expo-camera" as ExpoCamera << Library >>
+    component "Camera" as Camera << Component >>
+
+    component "expo-image-picker" as ExpoImagePicker << Library >>
+    component "ImagePicker" as ImagePicker << Component >>
+
+    component "expo-location" as ExpoLocation << Library >>
+    component "Location" as expoLocationComponent << Component >>
+
+    component "expo-document-picker" as ExpoDocumentPicker << Library >>
+    component "DocumentPicker" as DocumentPicker << Component >>
+
+    component "expo-av" as ExpoAV << Library >>
+    component "Audio" as AudioComponent << Component >>
+
+    component "react-native-calendar-picker" as ReactNativeCalendarPicker << Library >>
+    component "CalendarPicker" as CalendarPicker << Component >>
 
     control "AddEventController" as AddEventController 
     control "LocationController" as LocationController
     control "FileController" as FileController
-    control "Services" as Services
+    control "useAuth" as useAuth
+
     entity "EventModel" as EventModel
     entity "LocationModel" as LocationModel
 }
 
 ' Frontend View Hierarchy
-
-AuthProvider --> addEventView 
 addEventView --> AddDefaultView 
 addEventView --> AddDateView 
 addEventView --> ChooseCategoriesView 
 addEventView --> AddLocationView 
+addEventView --> useCurrentLocation
+
 
 ' View Components
-AddDateView --> Calendar 
-AddLocationView --> MapView 
-AddDefaultView --> MusicPicker 
-AddDefaultView --> ImagePicker 
-AddLocationView --> LocationPicker 
+addEventView --> SafeAreaContext
+addEventView --> ReactNative
+addEventView --> ReactNativeToast
+addEventView --> ReactI18next
+addEventView --> ReactNavigation
+addEventView --> React
+addEventView --> Modal
+addEventView --> AppHeader
+
+'AddDefaultView 
+AddDefaultView --> useImagePicker
+AddDefaultView --> useMusicPicker
+AddDefaultView --> useAudioRecorder
+
+'AddDateView
+AddDateView --> ReactNativeCalendarPicker
+ReactNativeCalendarPicker --> CalendarPicker
+
+'AddLocationView
+AddLocationView --> ReactNativeMaps
+
+
+' React
+React --> useState
+React --> useCallback
+
+' Camera
+useImagePicker --> ExpoCamera
+ExpoCamera --> Camera
+
+' ImagePicker
+useImagePicker --> ExpoImagePicker
+ExpoImagePicker --> ImagePicker
+
+' ReactI18next
+ReactI18next --> useTranslation
+
+' DocumentPicker
+useMusicPicker --> ExpoDocumentPicker
+ExpoDocumentPicker --> DocumentPicker
+
+' ExpoLocation
+useCurrentLocation --> ExpoLocation
+ExpoLocation --> expoLocationComponent
+
+' Audio
+useAudioRecorder --> ExpoAV
+ExpoAV --> AudioComponent
+
+' ReactNative
+ReactNative --> Image
+ReactNative --> Text
+ReactNative --> Alert
+ReactNative --> ScrollView
+ReactNative --> StyleSheet
+
+' ReactNavigation
+ReactNavigation --> useNavigation
+ReactNavigation --> useFocusEffect
+
+' ReactNativeToast
+ReactNativeToast --> useToast
+
+' SafeAreaContext
+SafeAreaContext --> SafeAreaView
+
+' ReactNativeMaps
+ReactNativeMaps --> MapView
+ReactNativeMaps --> Marker
+ReactNativeMaps --> LanLng
+
+
 
 ' Controller relationships
 addEventView --> AddEventController
 addEventView --> LocationController
 addEventView --> FileController
+addEventView --> useAuth
+
+
+
+
 AddEventController --> EventModel
 LocationController --> LocationModel
 
 ' User interaction
 UserReg .r.> addEventView
+addEventView .r.> app
 
 ' Backend relationships
 app -> authenticateUser
 app -d-> CreateEventController
 app -d-> CreateLocationController
-FileController --> Services
 
 CreateEventController <-d-> Event
 CreateLocationController <-d-> Location
-LocationModel -d-> app
-EventModel -d-> app
+
 
 
 @enduml
