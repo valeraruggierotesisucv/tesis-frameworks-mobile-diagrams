@@ -2,26 +2,15 @@
 skinparam style strictuml
 skinparam defaultTextAlignment center
 skinparam defaultFontSize 11
-
+left to right direction
 actor "Authenticated\nUser" as UserReg
 
-' This is a comment on a single line
-package backend <<express:4.21.2>>{
-    control app << JavaScript >>
-    control authenticateUser << middleware >>
-    control "CreateEvent" as CreateEventController << JavaScript >>
-    control "CreateLocation" as CreateLocationController << JavaScript >>
 
-    entity Event << JavaScript >>
-    entity Location << JavaScript >>
-}
-
-package frontend {
+package frontend <<React Native:0.76.6>>{
     boundary "AddEventView" as addEventView << TSX >>
     boundary "AddDefaultView" as AddDefaultView << TSX >>
     boundary "AddDateView" as AddDateView << TSX >>
     boundary "ChooseCategoriesView" as ChooseCategoriesView << TSX >>
-    boundary "AddLocationView" as AddLocationView << TSX >>
 
     component "react" as React << Library >>
     component "useState" as useState << Hook >>
@@ -41,11 +30,6 @@ package frontend {
     component "Alert" as Alert << Component >>
     component "ScrollView" as ScrollView << Component >>
     component "StyleSheet" as StyleSheet << Component >>
-
-    component "react-native-maps" as ReactNativeMaps << Library >>
-    component "LanLng" as LanLng << Component >>
-    component "MapView" as MapView << Component >>
-    component "Marker" as Marker << Component >>
 
     component "react-i18next" as ReactI18next << Library >>
     component "useTranslation" as useTranslation << Hook >>
@@ -92,9 +76,7 @@ package frontend {
 addEventView --> AddDefaultView 
 addEventView --> AddDateView 
 addEventView --> ChooseCategoriesView 
-addEventView --> AddLocationView 
 addEventView --> useCurrentLocation
-
 
 ' View Components
 addEventView --> SafeAreaContext
@@ -115,8 +97,6 @@ AddDefaultView --> useAudioRecorder
 AddDateView --> ReactNativeCalendarPicker
 ReactNativeCalendarPicker --> CalendarPicker
 
-'AddLocationView
-AddLocationView --> ReactNativeMaps
 
 
 ' React
@@ -163,37 +143,17 @@ ReactNativeToast --> useToast
 ' SafeAreaContext
 SafeAreaContext --> SafeAreaView
 
-' ReactNativeMaps
-ReactNativeMaps --> MapView
-ReactNativeMaps --> Marker
-ReactNativeMaps --> LanLng
-
-
-
 ' Controller relationships
 addEventView --> AddEventController
 addEventView --> LocationController
 addEventView --> FileController
 addEventView --> useAuth
 
-
-
-
 AddEventController --> EventModel
 LocationController --> LocationModel
 
 ' User interaction
-UserReg .r.> addEventView
-addEventView .r.> app
-
-' Backend relationships
-app -> authenticateUser
-app -d-> CreateEventController
-app -d-> CreateLocationController
-
-CreateEventController <-d-> Event
-CreateLocationController <-d-> Location
-
+UserReg ..> addEventView
 
 
 @enduml

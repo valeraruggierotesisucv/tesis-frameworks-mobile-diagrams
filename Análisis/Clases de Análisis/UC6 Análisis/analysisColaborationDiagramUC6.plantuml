@@ -8,11 +8,11 @@ object ": EventModel" as EventModel
 object ": LocationModel" as LocationModel
 
 UserReg -r- AddEventView : handleAddEvent(event) >
-AddEventView -r- FileController: > 1: uploadFile(image) \n 2: imageUrl <
-AddEventView -r- FileController: > 3: uploadFile(music) \n 4: musicUrl <
-AddEventView -d- LocationController: > 5: addLocation(location) \n 8: locationId <
-LocationController -r- LocationModel: > 6: createLocation(location) \n 7: location <
-AddEventView -u- AddEventController: > 9: postEvent(event) \n 10: event <
-AddEventController -r- EventModel: > 10: createEvent(event) \n 11: event <
+AddEventView -r- FileController: > 1: uploadFile(image) 
+AddEventView -r- FileController: > 2: uploadFile(music) 
+AddEventView -d- LocationController: > 3: addLocation(location) 
+LocationController -r- LocationModel: > 4: createLocation(location) 
+AddEventView -u- AddEventController: > 5: postEvent(event) 
+AddEventController -r- EventModel: > 6: createEvent(event) 
 
 @enduml

@@ -16,16 +16,16 @@ control "SignUpController" as signUpController
 control "LoginController" as loginController
 control "ForgotPasswordController" as forgotPasswordController
 
-user --> authView
-user --> forgotPasswordView
+user -- authView
+user -- forgotPasswordView
 
 
-authView --> signUpController
-authView --> loginController
-forgotPasswordView --> forgotPasswordController
+authView -- signUpController
+authView -- loginController
+forgotPasswordView -- forgotPasswordController
 
-signUpController --> userModel
-loginController --> userModel
-forgotPasswordController --> userModel
+signUpController -- userModel
+loginController -- userModel
+forgotPasswordController -- userModel
 
 @enduml

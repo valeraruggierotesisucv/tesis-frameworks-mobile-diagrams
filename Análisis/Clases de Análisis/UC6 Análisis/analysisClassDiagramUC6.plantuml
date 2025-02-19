@@ -16,14 +16,14 @@ control "AddEventController" as addEventController
 control "LocationController" as locationController
 
 
-user --> addEventView
+user -- addEventView
 
-addEventView --> addEventController
-addEventView --> locationController
-addEventView --> fileController
+addEventView -- addEventController
+addEventView -- locationController
+addEventView -- fileController
 
-addEventController --> eventModel
-fileController --> eventModel
-locationController --> locationModel
+addEventController -- eventModel
+fileController -- eventModel
+locationController -- locationModel
 
 @enduml

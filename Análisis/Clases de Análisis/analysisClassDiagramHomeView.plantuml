@@ -1,0 +1,38 @@
+@startuml analysisClassDiagramHomeView
+skinparam style strictuml
+left to right direction
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 11
+
+actor "User" as user
+
+entity "UserModel" as userModel
+entity "EventModel" as eventModel
+entity "CommentModel" as commentModel
+entity "NotificationModel" as notificationModel
+entity "SocialInteractionModel" as socialInteractionModel
+
+boundary "HomeView" as homeView
+
+control "ListEventsController" as listEventsController
+control "ProfileController" as profileController
+control "CommentEventController" as commentEventController
+control "LikeEventController" as likeEventController
+control "NotificationController" as notificationController
+control "ShareEventController" as shareEventController
+
+user -- homeView
+homeView -- listEventsController
+homeView -- profileController
+homeView -- commentEventController
+homeView -- likeEventController
+homeView -- notificationController
+homeView -- shareEventController
+
+listEventsController -- eventModel
+profileController -- userModel
+commentEventController -- commentModel
+likeEventController -- socialInteractionModel
+notificationController -- notificationModel
+
+

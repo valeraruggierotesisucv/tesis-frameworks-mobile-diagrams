@@ -1,29 +1,9 @@
-@startuml TraceAnalysisClassDiagram
+@startuml DesignClassDiagramMinified
 skinparam style strictuml
-left to right direction
 skinparam defaultTextAlignment center
 skinparam defaultFontSize 11
-
-
-
-package Analysis {
-    entity "EventModel" as eventModel
-    entity "LocationModel" as locationModel
-
-    boundary "AddEventView" as addEventViewAnalysis
-
-    control "FileController" as fileController
-    control "AddEventController" as addEventController
-    control "LocationController" as locationController
-
-    addEventViewAnalysis -- addEventController
-    addEventViewAnalysis -- locationController
-    addEventViewAnalysis -- fileController
-
-    addEventController -- eventModel
-    fileController -- eventModel
-    locationController -- locationModel
-}
+left to right direction
+actor "Authenticated\nUser" as UserReg
 
 
 package frontend <<React Native:0.76.6>>{
@@ -137,12 +117,8 @@ addEventView --> useAuth
 AddEventController --> EventModel
 LocationController --> LocationModel
 
+' User interaction
+UserReg ..> addEventView
 
-addEventViewAnalysis .[#ff4b5d].> addEventView : <font color=#ff4b5d><<trace>></font>
-fileController .[#green].> FileController : <font color=green><<trace>></font>
-addEventController .[#green].> AddEventController : <font color=green><<trace>></font>
-locationController .[#green].> LocationController : <font color=green><<trace>></font>
-eventModel .[#orange].> EventModel : <font color=orange><<trace>></font>
-locationModel .[#orange].> LocationModel : <font color=orange><<trace>></font>
 
 @enduml

@@ -1,0 +1,147 @@
+@startuml
+skinparam style strictuml
+skinparam defaultFontSize 11
+skinparam stereotypePosition top
+
+actor "Authenticated\nUser" as AuthenticatedUser
+
+boundary "AddEventView" as AddEventView << TSX >>
+
+control "useAudioRecorder" as useAudioRecorder << Custom Hooks >>
+control "useImagePicker" as useImagePicker << Custom Hooks >>
+control "useMusicPicker" as useMusicPicker << Custom Hooks >>
+control "useCurrentLocation" as useCurrentLocation << Custom Hooks >>
+
+control "AddEventController" as AddEventController
+control "LocationController" as LocationController
+control "FileController" as FileController
+
+entity "EventModel" as EventModel
+entity "LocationModel" as LocationModel
+
+participant "Express API" as API << REST >>
+participant "Prisma Client" as prisma << ORM >>
+database postgresql
+
+activate AddEventView
+AuthenticatedUser -> AddEventView : image
+
+AddEventView -> useImagePicker : openCamera() || openGallery()
+activate useImagePicker
+useImagePicker -> AddEventView : imageUri
+deactivate useImagePicker
+
+AuthenticatedUser -> AddEventView : title
+AuthenticatedUser -> AddEventView : description
+AuthenticatedUser -> AddEventView : date
+AuthenticatedUser -> AddEventView : startsAt
+AuthenticatedUser -> AddEventView : endsAt
+AuthenticatedUser -> AddEventView : category
+AuthenticatedUser -> AddEventView : music
+
+alt Pick Music File
+    AddEventView -> useMusicPicker : pickMusicFile()
+    activate useMusicPicker
+    useMusicPicker -> AddEventView : musicFileUri
+    deactivate useMusicPicker
+else Record Audio
+    AddEventView -> useAudioRecorder : startRecording()
+    activate useAudioRecorder
+    useAudioRecorder -> AddEventView : audioFileUri
+    deactivate useAudioRecorder
+end
+
+AuthenticatedUser -> AddEventView : location
+
+AddEventView -> useCurrentLocation : handleCurrentLocation()
+activate useCurrentLocation
+useCurrentLocation -> AddEventView : location
+deactivate useCurrentLocation
+
+AuthenticatedUser -> AddEventView : handleAddEvent()
+
+AddEventView -> FileController : uploadFile(imageUri, FileType.IMAGE)
+activate FileController
+FileController -> AddEventView : imageUrl
+deactivate FileController
+
+AddEventView -> FileController : uploadFile(musicFileUri, FileType.MUSIC)
+activate FileController
+FileController -> AddEventView : musicUrl
+deactivate FileController
+
+
+' Location 
+AddEventView -> LocationController : addLocation(location)
+activate LocationController
+LocationController -> LocationModel : createLocation(location)
+activate LocationModel
+
+LocationModel -> API : POST /api/locations
+activate API
+API -> prisma : location.create()
+activate prisma
+prisma -> postgresql : INSERT INTO locations
+activate postgresql
+postgresql -> prisma : locationId
+deactivate postgresql
+prisma -> API : location
+deactivate prisma
+API -> LocationModel : {data: location, success: true}
+deactivate API
+
+LocationModel -> LocationController : locationId
+deactivate LocationModel
+LocationController -> AddEventView : locationId
+deactivate LocationController
+
+
+' Event
+AddEventView -> AddEventController : postEvent(event)
+activate AddEventController
+
+AddEventController -> EventModel : createEvent(event)
+activate EventModel
+
+EventModel -> API : POST /api/events
+activate API
+API -> prisma : event.create()
+activate prisma
+prisma -> postgresql : INSERT INTO events
+activate postgresql
+
+alt Successful case
+    postgresql -> prisma : event
+
+    prisma -> API : event
+
+    API -> EventModel : {data: event, success: true}
+
+    EventModel -> AddEventController : event
+
+    AddEventController -> AddEventView : event
+
+    AddEventView -> AuthenticatedUser : Show success message
+else Failed case
+    postgresql -> prisma : error
+    deactivate postgresql
+    prisma -> API : error
+    deactivate prisma
+    API -> EventModel : status(500) {error: "FAILED to create event"}
+    deactivate API
+    EventModel -> AddEventController : error
+    deactivate EventModel
+    AddEventController -> AddEventView : error
+    deactivate AddEventController
+    AddEventView -> AuthenticatedUser : Show error message
+end
+deactivate AddEventView
+
+@enduml
+
+
+
+
+
+
+

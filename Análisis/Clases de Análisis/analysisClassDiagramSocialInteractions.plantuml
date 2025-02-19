@@ -29,33 +29,33 @@ control "ProfileController" as profileController
 control "SearchUserController" as searchUserController
 control "NotificationController" as notificationController
 
-user --> eventDetailsView
-user --> profileDetailsView
-user --> notificationsView
-user --> searchView
+user -- eventDetailsView
+user -- profileDetailsView
+user -- notificationsView
+user -- searchView
 
-eventDetailsView --> eventDetailsController
-eventDetailsView --> commentEventController
-eventDetailsView --> likeEventController
-eventDetailsView --> shareEventController
-eventDetailsView --> profileController
-eventDetailsView --> notificationController
+eventDetailsView -- eventDetailsController
+eventDetailsView -- commentEventController
+eventDetailsView -- likeEventController
+eventDetailsView -- shareEventController
+eventDetailsView -- profileController
+eventDetailsView -- notificationController
 
-profileDetailsView --> followUserController
-profileDetailsView --> notificationsController
-notificationsView --> notificationsController
-searchView --> searchUserController
-profileDetailsView --> profileController
+profileDetailsView -- followUserController
+profileDetailsView -- notificationsController
+notificationsView -- notificationsController
+searchView -- searchUserController
+profileDetailsView -- profileController
 
 
-profileController --> userModel
-eventDetailsController --> eventModel
-commentEventController --> commentModel
-likeEventController --> socialInteractionModel
-shareEventController --> eventModel
-followUserController --> followUserModel
-notificationsController --> notificationModel
-searchUserController --> userModel
-notificationController --> notificationModel
+profileController -- userModel
+eventDetailsController -- eventModel
+commentEventController -- commentModel
+likeEventController -- socialInteractionModel
+shareEventController -- eventModel
+followUserController -- followUserModel
+notificationsController -- notificationModel
+searchUserController -- userModel
+notificationController -- notificationModel
 
 @enduml

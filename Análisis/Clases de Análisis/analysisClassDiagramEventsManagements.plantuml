@@ -18,8 +18,6 @@ boundary "AddEventView" as addEventView
 boundary "EditEventView" as editEventView
 boundary "EventDetailsView" as eventDetailsView
 boundary "SearchView" as searchView
-boundary "HomeView" as homeView
-
 
 control "CategoriesController" as categoriesController
 control "LikeEventController" as likeEventController
@@ -38,51 +36,46 @@ control "CommentEventController" as commentEventController
 control "ProfileController" as profileController
 control "EventDetailsController" as eventDetailsController
 
-user --> addEventView
-user --> editEventView
-user --> eventDetailsView
-user --> searchView
-user --> homeView
+user -- addEventView
+user -- editEventView
+user -- eventDetailsView
+user -- searchView
 
-addEventView --> addEventController
-addEventView --> locationController
-addEventView --> fileController
-editEventView --> editEventController
-editEventView --> eventDetailsController
-editEventView --> fileController
-editEventView --> locationController
+addEventView -- addEventController
+addEventView -- locationController
+addEventView -- fileController
 
-eventDetailsView --> eventDetailsController
-eventDetailsView --> commentEventController
-eventDetailsView --> likeEventController
-eventDetailsView --> profileController
-eventDetailsView --> shareEventController
-eventDetailsView --> notificationController
-searchView --> searchEventController
-searchView --> categoriesController
-searchView --> likeEventController
-searchView --> notificationController
-searchView --> shareEventController
-searchView --> profileController
-searchView --> commentEventController
-homeView --> listEventsController
-homeView --> profileController
-homeView --> commentEventController
-homeView --> likeEventController
-homeView --> notificationController
-homeView --> shareEventController
+editEventView -- editEventController
+editEventView -- eventDetailsController
+editEventView -- fileController
+editEventView -- locationController
 
-addEventController --> eventModel
-fileController --> eventModel
-locationController --> locationModel
-editEventController --> eventModel
-eventDetailsController --> eventModel
-searchEventController --> eventModel
-listEventsController --> eventModel
-commentEventController --> commentModel
-profileController --> userModel
-categoriesController --> categoriesModel
-likeEventController --> socialInteractionModel
-notificationController --> notificationModel
+eventDetailsView -- eventDetailsController
+eventDetailsView -- commentEventController
+eventDetailsView -- likeEventController
+eventDetailsView -- profileController
+eventDetailsView -- shareEventController
+eventDetailsView -- notificationController
+
+searchView -- searchEventController
+searchView -- categoriesController
+searchView -- likeEventController
+searchView -- notificationController
+searchView -- shareEventController
+searchView -- profileController
+searchView -- commentEventController
+
+addEventController -- eventModel
+fileController -- eventModel
+locationController -- locationModel
+editEventController -- eventModel
+eventDetailsController -- eventModel
+searchEventController -- eventModel
+listEventsController -- eventModel
+commentEventController -- commentModel
+profileController -- userModel
+categoriesController -- categoriesModel
+likeEventController -- socialInteractionModel
+notificationController -- notificationModel
 
 @enduml
