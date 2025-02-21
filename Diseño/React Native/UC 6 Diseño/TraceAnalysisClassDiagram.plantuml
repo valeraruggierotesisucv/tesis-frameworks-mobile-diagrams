@@ -74,7 +74,7 @@ package frontend <<React Native:0.76.6>>{
     control "AddEventController" as AddEventController 
     control "LocationController" as LocationController
     control "FileController" as FileController
-    control "useAuth" as useAuth
+
 
     entity "EventModel" as EventModel
     entity "LocationModel" as LocationModel
@@ -132,16 +132,28 @@ ExpoAV --> AudioComponent
 addEventView --> AddEventController
 addEventView --> LocationController
 addEventView --> FileController
-addEventView --> useAuth
 
 AddEventController --> EventModel
 LocationController --> LocationModel
 
 
 addEventViewAnalysis .[#ff4b5d].> addEventView : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> AddDefaultView : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> AddDateView : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> ChooseCategoriesView : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> AppHeader : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> Modal : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> CalendarPicker : <font color=#ff4b5d><<trace>></font>
+
 fileController .[#green].> FileController : <font color=green><<trace>></font>
 addEventController .[#green].> AddEventController : <font color=green><<trace>></font>
 locationController .[#green].> LocationController : <font color=green><<trace>></font>
+fileController .[#green].> useAudioRecorder : <font color=green><<trace>></font>
+fileController .[#green].> useImagePicker : <font color=green><<trace>></font>
+fileController .[#green].> useMusicPicker : <font color=green><<trace>></font>
+addEventController .[#green].> useCurrentLocation : <font color=green><<trace>></font>
+addEventController .[#green].> useTranslation : <font color=green><<trace>></font>
+
 eventModel .[#orange].> EventModel : <font color=orange><<trace>></font>
 locationModel .[#orange].> LocationModel : <font color=orange><<trace>></font>
 

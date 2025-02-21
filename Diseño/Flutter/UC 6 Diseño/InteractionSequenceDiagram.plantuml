@@ -71,11 +71,19 @@ AddEventView -> AddEventViewModel : createEvent()
 activate AddEventViewModel
 AddEventViewModel -> StorageService : uploadFile(imageUri)
 activate StorageService
+StorageService -> SupabaseClient : storage.from(EventImages).upload(imageUri)
+activate SupabaseClient
+SupabaseClient -> StorageService : publicImageUrl
+deactivate SupabaseClient
 StorageService -> AddEventViewModel : publicImageUrl
 deactivate StorageService
 
 AddEventViewModel -> StorageService : uploadFile(musicUri)
 activate StorageService
+StorageService -> SupabaseClient : storage.from(EventMusic).upload(musicUri)
+activate SupabaseClient
+SupabaseClient -> StorageService : publicMusicUrl
+deactivate SupabaseClient
 StorageService -> AddEventViewModel : publicMusicUrl
 deactivate StorageService
 

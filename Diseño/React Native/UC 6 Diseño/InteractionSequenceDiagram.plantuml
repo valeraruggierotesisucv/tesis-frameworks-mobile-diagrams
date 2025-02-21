@@ -11,6 +11,7 @@ control "useAudioRecorder" as useAudioRecorder << Custom Hooks >>
 control "useImagePicker" as useImagePicker << Custom Hooks >>
 control "useMusicPicker" as useMusicPicker << Custom Hooks >>
 control "useCurrentLocation" as useCurrentLocation << Custom Hooks >>
+control "SupabaseClient" as SupabaseClient
 
 control "AddEventController" as AddEventController
 control "LocationController" as LocationController
@@ -62,11 +63,19 @@ AuthenticatedUser -> AddEventView : handleAddEvent()
 
 AddEventView -> FileController : uploadFile(imageUri, FileType.IMAGE)
 activate FileController
+FileController -> SupabaseClient : storage.from(EventImages).upload(imageUri)
+activate SupabaseClient
+SupabaseClient -> FileController : publicImageUrl
+deactivate SupabaseClient
 FileController -> AddEventView : imageUrl
 deactivate FileController
 
 AddEventView -> FileController : uploadFile(musicFileUri, FileType.MUSIC)
 activate FileController
+FileController -> SupabaseClient : storage.from(EventMusic).upload(musicFileUri)
+activate SupabaseClient
+SupabaseClient -> FileController : publicMusicUrl
+deactivate SupabaseClient
 FileController -> AddEventView : musicUrl
 deactivate FileController
 

@@ -54,7 +54,6 @@ package frontend <<React Native:0.76.6>>{
     control "AddEventController" as AddEventController 
     control "LocationController" as LocationController
     control "FileController" as FileController
-    control "useAuth" as useAuth
 
     entity "EventModel" as EventModel
     entity "LocationModel" as LocationModel
@@ -112,7 +111,6 @@ ExpoAV --> AudioComponent
 addEventView --> AddEventController
 addEventView --> LocationController
 addEventView --> FileController
-addEventView --> useAuth
 
 AddEventController --> EventModel
 LocationController --> LocationModel
