@@ -1,0 +1,108 @@
+@startuml architecture_design
+skinparam ComponentBackgroundColor white
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 11
+
+node "Mobile Device" as mobileDevice {
+    component "Flutter App" as flutterApp {
+        ' Dart Layer
+        component "Dart App" as dartApp {
+            component "App Logic" as appLogic
+            component "Widgets" as widgets
+        }
+
+        ' Framework Layer
+        component "Flutter Framework (Dart)" as framework {
+            component "Material/Cupertino" as materialCupertino
+            component "Widgets" as widgetsLayer
+            component "Rendering" as renderingLayer
+            component "Animation" as animation
+            component "Painting" as painting
+            component "Gestures" as gestures
+            component "Foundation" as foundation
+        }
+        
+        component "dart:ui API" as dartUI {
+            
+        }
+
+        ' Engine Layer
+        component "Flutter Engine (C/C++)" as engine {
+            component "Service Protocol" as serviceProtocol
+            component "Composition" as composition
+            component "Platform Channels" as platformChannels
+            component "Dart Isolate Setup" as dartIsolateSetup
+            component "Rendering" as rendering
+            component "System Events" as systemEvents
+            component "Dart Runtime Mgmt" as dartRuntimeMgmt
+            component "Frame Scheduling" as frameScheduling
+            component "Asset Resolution" as assetResolution
+            component "Frame Pipelining" as framePipelining
+            component "Text Layout" as textLayout
+        }
+
+        component "Embedder API" as embedderAPI {
+
+        }
+
+        ' Platform-specific Layer
+        component "Platform Embedder (C/C++)" as embedder {
+            component "Render Surface Setup" as renderSurfaceSetup
+            component "Native Plugins" as nativePlugins
+            component "App Packaging" as appPackaging
+            component "Thread Setup" as threadSetup
+            component "Event Loop Interop" as eventLoopInterop
+        }
+
+        component "Platform-specific API" as platformAPI {
+
+        }
+        component "Runner" as runner {
+
+        }
+    }
+}
+
+node "Backend" as backend {
+    component "Express API" as expressAPI
+    component "Prisma Client" as prismaClient
+}
+
+node "Supabase" as supabase {
+    component "Authentication" as auth
+    component "File Storage" as fileStorage
+    component "PostgreSQL Database" as postgresDB
+}
+
+' Internal Flutter connections
+dartApp --> framework
+framework --> dartUI
+dartUI --> engine
+engine --> embedderAPI
+embedderAPI --> embedder
+embedder --> platformAPI
+platformAPI --> runner
+' Layer details
+materialCupertino --> widgetsLayer
+widgetsLayer --> renderingLayer
+renderingLayer --> gestures
+renderingLayer --> painting
+renderingLayer --> animation
+animation --> foundation
+painting --> foundation
+gestures --> foundation
+
+
+
+' External connections
+' embedder --> expressAPI : HTTP
+dartApp <.[#000000]u.> auth 
+dartApp <.[#000000]u.> fileStorage
+dartApp <.[#000000]r.> expressAPI
+' dartApp --> fileStorage : Direct Storage
+
+expressAPI <.[#000000].> prismaClient
+prismaClient <.[#000000].> postgresDB
+
+
+@enduml

@@ -1,0 +1,155 @@
+@startuml
+skinparam style strictuml
+skinparam defaultFontSize 11
+skinparam stereotypePosition top
+
+actor "Authenticated\nUser" as AuthenticatedUser
+
+boundary "AddEventView" as AddEventView << dart >>
+
+control "AddEventViewModel" as AddEventController
+
+control "EventRepository" as EventRepository
+control "LocationRepository" as LocationRepository
+control "StorageService" as StorageService
+control "UserProvider" as UserProvider
+control "ApiClient" as ApiClient
+control "SupabaseClient" as SupabaseClient
+
+control "image_picker" as imagePicker
+control "FilePicker" as FilePicker
+control "FlutterSoundRecorder" as FlutterSoundRecorder
+control "Location" as Location
+
+entity "EventModel" as EventModel
+entity "LocationModel" as LocationModel
+entity "SupabaseUserModel" as SupabaseUserModel
+
+participant "Express API" as API << REST >>
+participant "Prisma Client" as prisma << ORM >>
+database postgresql
+
+
+AuthenticatedUser -> AddEventView : image
+
+alt Pick Image
+activate AddEventView
+AddEventView -> imagePicker : pickImage()
+activate imagePicker
+imagePicker -> AddEventView : imageUri
+deactivate imagePicker
+
+AuthenticatedUser -> AddEventView : title
+AuthenticatedUser -> AddEventView : description
+AuthenticatedUser -> AddEventView : date
+AuthenticatedUser -> AddEventView : startsAt
+AuthenticatedUser -> AddEventView : endsAt
+AuthenticatedUser -> AddEventView : category
+AuthenticatedUser -> AddEventView : music
+
+
+AuthenticatedUser -> AddEventView : music
+alt Pick Music File
+    AddEventView -> FilePicker : pickFile()
+    activate FilePicker
+    FilePicker -> AddEventView : musicUri
+    deactivate FilePicker
+else Record Audio
+    AddEventView -> FlutterSoundRecorder : openRecorder()
+    activate FlutterSoundRecorder
+    FlutterSoundRecorder -> AddEventView : musicUri
+    deactivate FlutterSoundRecorder
+end
+
+AuthenticatedUser -> AddEventView : location
+AddEventView -> Location : getLocation()
+activate Location
+Location -> AddEventView : location
+deactivate Location
+
+AddEventView -> AddEventViewModel : createEvent()
+activate AddEventViewModel
+AddEventViewModel -> StorageService : uploadFile(imageUri)
+activate StorageService
+StorageService -> AddEventViewModel : publicImageUrl
+deactivate StorageService
+
+AddEventViewModel -> StorageService : uploadFile(musicUri)
+activate StorageService
+StorageService -> AddEventViewModel : publicMusicUrl
+deactivate StorageService
+
+AddEventViewModel -> LocationRepository : createLocation()
+activate LocationRepository
+LocationRepository -> ApiClient : createLocation()
+
+activate ApiClient
+
+ApiClient -> API : POST /api/locations
+activate API
+API -> prisma : location.create()
+activate prisma
+prisma -> postgresql : INSERT INTO locations
+activate postgresql
+postgresql -> prisma : locationId
+deactivate postgresql
+prisma -> API : location
+deactivate prisma
+API -> ApiClient : {data: location, success: true}
+deactivate API
+ApiClient -> LocationModel
+deactivate ApiClient
+activate LocationModel
+
+LocationModel -> LocationRepository : location
+LocationRepository -> AddEventViewModel : location
+deactivate LocationModel
+deactivate LocationRepository
+
+AddEventViewModel -> EventRepository : createEvent()
+activate EventRepository
+EventRepository -> ApiClient : createEvent()
+activate ApiClient
+ApiClient -> API : POST /api/events
+activate API
+API -> prisma : event.create()
+activate prisma
+prisma -> postgresql : INSERT INTO events
+activate postgresql
+postgresql -> prisma : eventId
+deactivate postgresql
+prisma -> API : event
+deactivate prisma
+API -> ApiClient : {data: event, success: true}
+deactivate API
+ApiClient -> EventModel : event
+deactivate ApiClient
+activate EventModel
+EventModel -> EventRepository : event
+deactivate EventModel
+EventRepository -> AddEventViewModel : event
+deactivate EventRepository
+
+AddEventViewModel -> AddEventView : event
+deactivate AddEventViewModel
+AddEventView -> AuthenticatedUser : showSuccessMessage()
+deactivate AddEventView
+
+
+
+
+
+
+
+
+
+
+
+@enduml
+
+
+
+
+
+
+

@@ -1,0 +1,108 @@
+@startuml TraceAnalysisClassDiagram
+skinparam style strictuml
+left to right direction
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 11
+
+
+
+package Analysis {
+    entity "EventModel" as eventModelAnalysis
+    entity "LocationModel" as locationModelAnalysis
+
+    boundary "AddEventView" as addEventViewAnalysis
+
+    control "FileController" as fileController
+    control "AddEventController" as addEventController
+    control "LocationController" as locationController
+
+    addEventViewAnalysis -- addEventController
+    addEventViewAnalysis -- locationController
+    addEventViewAnalysis -- fileController
+
+    addEventController -- eventModelAnalysis
+    fileController -- eventModelAnalysis
+    locationController -- locationModelAnalysis
+}
+
+package frontend <<Flutter:3.10.0>>{
+    boundary "AddEventView" as addEventView << dart >>
+    boundary "AddDateView" as addDateView << dart >>
+    boundary "ChooseCategoriesView" as chooseCategoriesView << dart >>
+
+    component "package:eventify/widgets" as widgets
+    component "package:flutter/material.dart" as material
+    component "package:location/location.dart" as locationPackage
+    component "package:file_picker/file_picker.dart" as flutterFilePicker
+    component "package:flutter_sound/flutter_sound.dart" as flutterSound
+    component "package:permission_handler/permission_handler.dart" as permissionHandler
+    component "package:image_picker/image_picker.dart" as flutterImagePicker
+    component "Location" as location
+    component "FilePicker" as filePicker
+    component "FlutterSoundRecorder" as flutterSoundRecorder
+    component "ImagePicker" as imagePicker
+
+    control "EventRepository" as eventRepository << dart >>
+    control "LocationRepository" as locationRepository << dart >>
+    control "StorageService" as storageService << dart >>
+    control "UserProvider" as userProvider << dart >>
+    control "ApiClient" as apiClient << dart >>
+    control "SupabaseClient" as supabaseClient << dart >>
+    control "AddEventViewModel" as addEventViewModel << dart >>
+
+    entity "EventModel" as eventModel
+    entity "LocationModel" as locationModel
+    entity "SupabaseUserModel" as supabaseUserModel
+}
+
+
+
+addEventView --> addDateView
+addEventView --> chooseCategoriesView
+addEventView --> widgets
+addEventView --> material
+addEventView --> locationPackage
+addEventView --> flutterFilePicker
+addEventView --> flutterSound
+addEventView --> permissionHandler
+addEventView --> flutterImagePicker
+addEventView --> addEventViewModel
+
+addEventViewModel --> eventRepository
+addEventViewModel --> locationRepository
+addEventViewModel --> storageService
+addEventViewModel --> userProvider
+
+eventRepository --> apiClient
+eventRepository --> eventModel
+
+locationRepository --> apiClient
+locationRepository --> locationModel
+
+storageService --> supabaseClient
+
+userProvider --> supabaseUserModel
+
+locationPackage --> location
+flutterFilePicker --> filePicker
+flutterSound --> flutterSoundRecorder
+flutterImagePicker --> imagePicker
+
+addEventViewAnalysis .[#ff4b5d].> addEventView : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> addDateView : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> chooseCategoriesView : <font color=#ff4b5d><<trace>></font>
+
+addEventController .[#green].> addEventViewModel : <font color=green><<trace>></font>
+addEventController .[#green].> eventRepository : <font color=green><<trace>></font>
+fileController .[#green].> storageService : <font color=green><<trace>></font>
+locationController .[#green].> addEventViewModel : <font color=green><<trace>></font>
+locationController .[#green].> locationRepository : <font color=green><<trace>></font>
+locationController .[#green].> location : <font color=green><<trace>></font>
+fileController .[#green].> imagePicker : <font color=green><<trace>></font>
+fileController .[#green].> flutterSoundRecorder : <font color=green><<trace>></font>
+fileController .[#green].> filePicker : <font color=green><<trace>></font>
+
+
+eventModel .[#orange].> eventModelAnalysis : <font color=orange><<trace>></font>
+locationModel .[#orange].> locationModelAnalysis : <font color=orange><<trace>></font>
+
