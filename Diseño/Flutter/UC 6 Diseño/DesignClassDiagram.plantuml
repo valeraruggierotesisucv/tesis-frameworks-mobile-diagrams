@@ -26,14 +26,13 @@ package frontend <<Flutter:3.10.0>>{
     control "EventRepository" as eventRepository << dart >>
     control "LocationRepository" as locationRepository << dart >>
     control "StorageService" as storageService << dart >>
-    control "UserProvider" as userProvider << dart >>
     control "ApiClient" as apiClient << dart >>
     control "SupabaseClient" as supabaseClient << dart >>
     control "AddEventViewModel" as addEventViewModel << dart >>
 
     entity "EventModel" as eventModel
     entity "LocationModel" as locationModel
-    entity "SupabaseUserModel" as supabaseUserModel
+
 }
 
 UserReg ..> addEventView
@@ -52,7 +51,6 @@ addEventView --> addEventViewModel
 addEventViewModel --> eventRepository
 addEventViewModel --> locationRepository
 addEventViewModel --> storageService
-addEventViewModel --> userProvider
 
 eventRepository --> apiClient
 eventRepository --> eventModel
@@ -61,8 +59,6 @@ locationRepository --> apiClient
 locationRepository --> locationModel
 
 storageService --> supabaseClient
-
-userProvider --> supabaseUserModel
 
 locationPackage --> location
 flutterFilePicker --> filePicker

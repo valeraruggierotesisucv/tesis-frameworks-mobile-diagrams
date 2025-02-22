@@ -12,7 +12,6 @@ control "AddEventViewModel" as AddEventController
 control "EventRepository" as EventRepository
 control "LocationRepository" as LocationRepository
 control "StorageService" as StorageService
-control "UserProvider" as UserProvider
 control "ApiClient" as ApiClient
 control "SupabaseClient" as SupabaseClient
 
@@ -23,7 +22,6 @@ control "Location" as Location
 
 entity "EventModel" as EventModel
 entity "LocationModel" as LocationModel
-entity "SupabaseUserModel" as SupabaseUserModel
 
 participant "Express API" as API << REST >>
 participant "Prisma Client" as prisma << ORM >>
