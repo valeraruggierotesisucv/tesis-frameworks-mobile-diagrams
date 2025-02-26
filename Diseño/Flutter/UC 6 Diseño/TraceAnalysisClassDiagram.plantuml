@@ -30,17 +30,18 @@ package frontend <<Flutter:3.10.0>>{
     boundary "AddDateView" as addDateView << dart >>
     boundary "ChooseCategoriesView" as chooseCategoriesView << dart >>
 
-    component "package:eventify/widgets" as widgets
-    component "package:flutter/material.dart" as material
-    component "package:location/location.dart" as locationPackage
-    component "package:file_picker/file_picker.dart" as flutterFilePicker
-    component "package:flutter_sound/flutter_sound.dart" as flutterSound
-    component "package:permission_handler/permission_handler.dart" as permissionHandler
-    component "package:image_picker/image_picker.dart" as flutterImagePicker
-    component "Location" as location
-    component "FilePicker" as filePicker
-    component "FlutterSoundRecorder" as flutterSoundRecorder
-    component "ImagePicker" as imagePicker
+    component "widgets" as widgets <<custom widgets>>
+    component "material" as material <<package>>
+    component "location" as locationPackage <<package>>
+    component "file_picker" as flutterFilePicker <<package>>
+    component "flutter_sound" as flutterSound <<package>>
+    component "permission_handler" as permissionHandler <<package>>
+    component "image_picker" as flutterImagePicker <<package>>
+
+    component "Location" as location <<Class>>
+    component "FilePicker" as filePicker <<Class>>
+    component "FlutterSoundRecorder" as flutterSoundRecorder <<Class>>
+    component "ImagePicker" as imagePicker <<Class>>
 
     control "EventRepository" as eventRepository << dart >>
     control "LocationRepository" as locationRepository << dart >>

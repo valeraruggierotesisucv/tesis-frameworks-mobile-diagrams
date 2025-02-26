@@ -9,53 +9,90 @@ boundary "AddEventView" as AddEventView << TSX >>
 
 control "useAudioRecorder" as useAudioRecorder << Custom Hooks >>
 control "useImagePicker" as useImagePicker << Custom Hooks >>
+control "ImagePicker" as ImagePicker << Component >>
 control "useMusicPicker" as useMusicPicker << Custom Hooks >>
+control "Audio" as Audio << Component >>
 control "useCurrentLocation" as useCurrentLocation << Custom Hooks >>
+control "Location" as expoLocationcontrol << Component >>
 control "SupabaseClient" as SupabaseClient
+control "DocumentPicker" as DocumentPicker << Component >>
 
-control "AddEventController" as AddEventController
-control "LocationController" as LocationController
-control "FileController" as FileController
+control "AddEventController" as AddEventController << TS >>
+control "LocationController" as LocationController << TS >>
+control "FileController" as FileController << TS >>
 
-entity "EventModel" as EventModel
-entity "LocationModel" as LocationModel
+entity "EventModel" as EventModel << TS >>
+entity "LocationModel" as LocationModel << TS >>
 
 participant "Express API" as API << REST >>
 participant "Prisma Client" as prisma << ORM >>
+
+database supabase
 database postgresql
 
 activate AddEventView
-AuthenticatedUser -> AddEventView : image
 
-AddEventView -> useImagePicker : openCamera() || openGallery()
-activate useImagePicker
-useImagePicker -> AddEventView : imageUri
-deactivate useImagePicker
 
-AuthenticatedUser -> AddEventView : title
-AuthenticatedUser -> AddEventView : description
-AuthenticatedUser -> AddEventView : date
-AuthenticatedUser -> AddEventView : startsAt
-AuthenticatedUser -> AddEventView : endsAt
-AuthenticatedUser -> AddEventView : category
-AuthenticatedUser -> AddEventView : music
+alt Take Picture
+    AuthenticatedUser -> AddEventView : openCamera()
+    AddEventView -> useImagePicker : openCamera()
+    activate useImagePicker
+    useImagePicker -> ImagePicker : launchCameraAsync()
+    activate ImagePicker
+    ImagePicker -> useImagePicker : result.assets[0].uri
+    deactivate ImagePicker
+    useImagePicker -> AddEventView : imageUri
+    deactivate useImagePicker
+else Pick Image
+    AuthenticatedUser -> AddEventView : openGallery()
+    AddEventView -> useImagePicker : openGallery()
+    activate useImagePicker
+    useImagePicker -> ImagePicker : launchImageLibraryAsync()
+    activate ImagePicker
+    ImagePicker -> useImagePicker : result.assets[0].uri
+    deactivate ImagePicker
+    useImagePicker -> AddEventView : imageUri
+    deactivate useImagePicker
+end
+
+AuthenticatedUser -> AddEventView : setTitle()
+AuthenticatedUser -> AddEventView : setDescription()
+AuthenticatedUser -> AddEventView : setDate()
+AuthenticatedUser -> AddEventView : setStartsAt()
+AuthenticatedUser -> AddEventView : setEndsAt()
+AuthenticatedUser -> AddEventView : setCategory()
 
 alt Pick Music File
+    AuthenticatedUser -> AddEventView : pickMusicFile()
     AddEventView -> useMusicPicker : pickMusicFile()
     activate useMusicPicker
+    useMusicPicker -> DocumentPicker : getDocumentAsync()
+    activate DocumentPicker
+    DocumentPicker -> useMusicPicker : result.assets[0].uri
+    deactivate DocumentPicker
     useMusicPicker -> AddEventView : musicFileUri
     deactivate useMusicPicker
 else Record Audio
-    AddEventView -> useAudioRecorder : startRecording()
+    AuthenticatedUser -> AddEventView : startRecording()
+    AddEventView -> useAudioRecorder : recordAudio()
     activate useAudioRecorder
+    useAudioRecorder -> Audio : Recording.createAsync()
+    activate Audio
+    Audio -> useAudioRecorder : recording
+    deactivate Audio
+    AuthenticatedUser -> AddEventView : stopRecording()
+    AddEventView -> useAudioRecorder : stopRecording()
     useAudioRecorder -> AddEventView : audioFileUri
     deactivate useAudioRecorder
 end
 
-AuthenticatedUser -> AddEventView : location
-
-AddEventView -> useCurrentLocation : handleCurrentLocation()
+AuthenticatedUser -> AddEventView : handleCurrentLocation()
+AddEventView -> useCurrentLocation : getCurrentLocation()
 activate useCurrentLocation
+useCurrentLocation -> expoLocationcontrol : getCurrentPositionAsync()
+activate expoLocationcontrol
+expoLocationcontrol -> useCurrentLocation : currentLocation
+deactivate expoLocationcontrol
 useCurrentLocation -> AddEventView : location
 deactivate useCurrentLocation
 
@@ -65,6 +102,10 @@ AddEventView -> FileController : uploadFile(imageUri, FileType.IMAGE)
 activate FileController
 FileController -> SupabaseClient : storage.from(EventImages).upload(imageUri)
 activate SupabaseClient
+SupabaseClient -> supabase : storage.from(EventImages).getPublicUrl(imageUri)
+activate supabase
+supabase -> SupabaseClient : publicImageUrl
+deactivate supabase
 SupabaseClient -> FileController : publicImageUrl
 deactivate SupabaseClient
 FileController -> AddEventView : imageUrl
@@ -74,6 +115,10 @@ AddEventView -> FileController : uploadFile(musicFileUri, FileType.MUSIC)
 activate FileController
 FileController -> SupabaseClient : storage.from(EventMusic).upload(musicFileUri)
 activate SupabaseClient
+SupabaseClient -> supabase : storage.from(EventMusic).getPublicUrl(musicFileUri)
+activate supabase
+supabase -> SupabaseClient : publicMusicUrl
+deactivate supabase
 SupabaseClient -> FileController : publicMusicUrl
 deactivate SupabaseClient
 FileController -> AddEventView : musicUrl
