@@ -5,57 +5,65 @@ skinparam stereotypePosition top
 
 actor "Authenticated\nUser" as AuthenticatedUser
 
-boundary "AddEventView" as AddEventView << dart >>
+boundary "AddEventView" as AddEventView << Dart >>
 
 
-control "AddEventViewModel" as AddEventController << dart >>
-control "EventRepository" as EventRepository << dart >>
-control "LocationRepository" as LocationRepository << dart >>
-control "StorageService" as StorageService << dart >>
-control "ApiClient" as ApiClient << dart >>
-control "SupabaseClient" as SupabaseClient << dart >>
+control "AddEventViewModel" as AddEventViewModel << Dart >>
+control "EventRepository" as EventRepository << Dart >>
+control "LocationRepository" as LocationRepository << Dart >>
+control "StorageService" as StorageService << Dart >>
+control "ApiClient" as ApiClient << Dart >>
+control "SupabaseClient" as SupabaseClient
 
-control "image_picker" as imagePicker << class >>
-control "FilePicker" as FilePicker << class >>
-control "FlutterSoundRecorder" as FlutterSoundRecorder << class >>
-control "Location" as Location << class >>
+control "image_picker" as imagePicker << Class >>
+control "FilePicker" as FilePicker << Class >>
+control "FlutterSoundRecorder" as FlutterSoundRecorder << Class >>
+control "Location" as Location << Class >>
 
-entity "EventModel" as EventModel
-entity "LocationModel" as LocationModel
+entity "EventModel" as EventModel << Dart >>
+entity "LocationModel" as LocationModel << Dart >>
 
 participant "Express API" as API << REST >>
 participant "Prisma Client" as prisma << ORM >>
 database postgresql
+database supabase
 
 
-AuthenticatedUser -> AddEventView : image
+alt Take Picture
+    AuthenticatedUser -> AddEventView : takePhoto()
+    activate AddEventView
+    AddEventView -> imagePicker : pickImage(source: ImageSource.camera)
+    activate imagePicker
+    imagePicker -> AddEventView : _imageUri
+    deactivate imagePicker
+else Pick Image
+    AuthenticatedUser -> AddEventView : chooseFromGallery()
+    AddEventView -> imagePicker : pickImage(source: ImageSource.gallery)
+    activate imagePicker
+    imagePicker -> AddEventView : _imageUri
+    deactivate imagePicker
+end
 
-alt Pick Image
-activate AddEventView
-AddEventView -> imagePicker : pickImage()
-activate imagePicker
-imagePicker -> AddEventView : imageUri
-deactivate imagePicker
+AuthenticatedUser -> AddEventView : setState(_title)
+AuthenticatedUser -> AddEventView : setState(_description)
+AuthenticatedUser -> AddEventView : setState(_date)
+AuthenticatedUser -> AddEventView : setState(_startsAt)
+AuthenticatedUser -> AddEventView : setState(_endsAt)
+AuthenticatedUser -> AddEventView : setState(_category)
 
-AuthenticatedUser -> AddEventView : title
-AuthenticatedUser -> AddEventView : description
-AuthenticatedUser -> AddEventView : date
-AuthenticatedUser -> AddEventView : startsAt
-AuthenticatedUser -> AddEventView : endsAt
-AuthenticatedUser -> AddEventView : category
-AuthenticatedUser -> AddEventView : music
-
-
-AuthenticatedUser -> AddEventView : music
 alt Pick Music File
+    AuthenticatedUser -> AddEventView : pickMusic()
     AddEventView -> FilePicker : pickFile()
     activate FilePicker
-    FilePicker -> AddEventView : musicUri
+    FilePicker -> AddEventView : _musicUri
     deactivate FilePicker
 else Record Audio
+    AuthenticatedUser -> AddEventView : startRecording()
     AddEventView -> FlutterSoundRecorder : openRecorder()
     activate FlutterSoundRecorder
-    FlutterSoundRecorder -> AddEventView : musicUri
+    AuthenticatedUser -> AddEventView : stopRecording()
+    AddEventView -> FlutterSoundRecorder : stopRecorder()
+    FlutterSoundRecorder -> AddEventView : _musicUri
     deactivate FlutterSoundRecorder
 end
 
@@ -73,6 +81,11 @@ AddEventViewModel -> StorageService : uploadFile(imageUri)
 activate StorageService
 StorageService -> SupabaseClient : storage.from(EventImages).upload(imageUri)
 activate SupabaseClient
+SupabaseClient -> supabase : storage.from(EventImages).upload(imageUri)
+activate supabase
+supabase -> SupabaseClient : publicImageUrl
+deactivate supabase
+
 SupabaseClient -> StorageService : publicImageUrl
 deactivate SupabaseClient
 StorageService -> AddEventViewModel : publicImageUrl
@@ -82,6 +95,12 @@ AddEventViewModel -> StorageService : uploadFile(musicUri)
 activate StorageService
 StorageService -> SupabaseClient : storage.from(EventMusic).upload(musicUri)
 activate SupabaseClient
+
+SupabaseClient -> supabase : storage.from(EventMusic).upload(musicUri)
+activate supabase
+supabase -> SupabaseClient : publicMusicUrl
+deactivate supabase
+
 SupabaseClient -> StorageService : publicMusicUrl
 deactivate SupabaseClient
 StorageService -> AddEventViewModel : publicMusicUrl
@@ -99,20 +118,31 @@ API -> prisma : location.create()
 activate prisma
 prisma -> postgresql : INSERT INTO locations
 activate postgresql
-postgresql -> prisma : locationId
-deactivate postgresql
-prisma -> API : location
-deactivate prisma
-API -> ApiClient : {data: location, success: true}
-deactivate API
-ApiClient -> LocationModel
-deactivate ApiClient
-activate LocationModel
 
-LocationModel -> LocationRepository : location
-LocationRepository -> AddEventViewModel : location
-deactivate LocationModel
-deactivate LocationRepository
+alt Successful case
+    postgresql -> prisma : locationId
+    prisma -> API : location
+    API -> ApiClient : {data: location, success: true}
+    ApiClient -> LocationModel : fromJson(location)
+    activate LocationModel
+    LocationModel -> LocationRepository : location
+    LocationRepository -> AddEventViewModel : location
+else Failed case
+    postgresql -> prisma : error
+    deactivate postgresql
+    prisma -> API : error
+    deactivate prisma
+    API -> ApiClient : status(500) {error: "FAILED to create location"}
+    deactivate API
+    ApiClient -> LocationModel : error
+    deactivate ApiClient
+    LocationModel -> LocationRepository : error
+    deactivate LocationModel
+    LocationRepository -> AddEventViewModel : error
+    deactivate LocationRepository
+    AddEventViewModel -> AddEventView : error
+    AddEventView -> AuthenticatedUser : showErrorMessage()
+end
 
 AddEventViewModel -> EventRepository : createEvent()
 activate EventRepository
@@ -129,16 +159,11 @@ alt Successful case
     postgresql -> prisma : eventId
     prisma -> API : event
     API -> ApiClient : {data: event, success: true}
-    
-    ApiClient -> EventModel : event
-    deactivate ApiClient
+    ApiClient -> EventModel : fromJson(event)
     activate EventModel
     EventModel -> EventRepository : event
-    deactivate EventModel
     EventRepository -> AddEventViewModel : event
-    deactivate EventRepository
     AddEventViewModel -> AddEventView : event
-    deactivate AddEventViewModel
     AddEventView -> AuthenticatedUser : showSuccessMessage()
 else Failed case
     postgresql -> prisma : error
@@ -148,11 +173,13 @@ else Failed case
     API -> ApiClient : status(500) {error: "FAILED to create event"}
     deactivate API
     ApiClient -> EventModel : error
-    activate EventModel
+    deactivate ApiClient
     EventModel -> EventRepository : error
     deactivate EventModel
     EventRepository -> AddEventViewModel : error
+    deactivate EventRepository
     AddEventViewModel -> AddEventView : error
+    deactivate AddEventViewModel
     AddEventView -> AuthenticatedUser : showErrorMessage()
 end
 deactivate AddEventView

@@ -7,32 +7,32 @@ actor "Authenticated\nUser" as UserReg
 
 
 package frontend <<Flutter:3.10.0>>{
-    boundary "AddEventView" as addEventView << dart >>
-    boundary "AddDateView" as addDateView << dart >>
-    boundary "ChooseCategoriesView" as chooseCategoriesView << dart >>
+    boundary "AddEventView" as addEventView << Dart >>
+    boundary "AddDateView" as addDateView << Dart >>
+    boundary "ChooseCategoriesView" as chooseCategoriesView << Dart >>
 
-    component "widgets" as widgets <<custom widgets>>
-    component "material" as material <<package>>
-    component "location" as locationPackage <<package>>
-    component "file_picker" as flutterFilePicker <<package>>
-    component "flutter_sound" as flutterSound <<package>>
-    component "permission_handler" as permissionHandler <<package>>
-    component "image_picker" as flutterImagePicker <<package>>
+    component "widgets" as widgets <<Custom Widgets>>
+    component "material" as material <<Package>>
+    component "location" as locationPackage <<Package>>
+    component "file_picker" as flutterFilePicker <<Package>>
+    component "flutter_sound" as flutterSound <<Package>>
+    component "permission_handler" as permissionHandler <<Package>>
+    component "image_picker" as flutterImagePicker <<Package>>
 
     component "Location" as location <<Class>>
     component "FilePicker" as filePicker <<Class>>
     component "FlutterSoundRecorder" as flutterSoundRecorder <<Class>>
     component "ImagePicker" as imagePicker <<Class>>
 
-    control "EventRepository" as eventRepository << dart >>
-    control "LocationRepository" as locationRepository << dart >>
-    control "StorageService" as storageService << dart >>
-    control "ApiClient" as apiClient << dart >>
-    control "SupabaseClient" as supabaseClient << dart >>
-    control "AddEventViewModel" as addEventViewModel << dart >>
+    control "EventRepository" as eventRepository << Dart >>
+    control "LocationRepository" as locationRepository << Dart >>
+    control "StorageService" as storageService << Dart >>
+    control "ApiClient" as apiClient << Dart >>
+    control "SupabaseClient" as supabaseClient << Dart >>
+    control "AddEventViewModel" as addEventViewModel << Dart >>
 
-    entity "EventModel" as eventModel
-    entity "LocationModel" as locationModel
+    entity "EventModel" as eventModel << Dart >>
+    entity "LocationModel" as locationModel << Dart >>
 
 }
 

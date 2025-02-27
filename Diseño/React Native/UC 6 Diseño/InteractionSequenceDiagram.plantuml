@@ -137,17 +137,26 @@ API -> prisma : location.create()
 activate prisma
 prisma -> postgresql : INSERT INTO locations
 activate postgresql
-postgresql -> prisma : locationId
-deactivate postgresql
-prisma -> API : location
-deactivate prisma
-API -> LocationModel : {data: location, success: true}
-deactivate API
 
-LocationModel -> LocationController : locationId
-deactivate LocationModel
-LocationController -> AddEventView : locationId
-deactivate LocationController
+alt Successful case
+    postgresql -> prisma : locationId
+    prisma -> API : location
+    API -> LocationModel : {data: location, success: true}
+    LocationModel -> LocationController : locationId
+    LocationController -> AddEventView : locationId
+else Failed case
+    postgresql -> prisma : error
+    deactivate postgresql
+    prisma -> API : error
+    deactivate prisma
+    API -> LocationModel : status(500) {error: "FAILED to create location"}
+    deactivate API
+    LocationModel -> LocationController : error
+    deactivate LocationModel
+    LocationController -> AddEventView : error
+    deactivate LocationController
+    AddEventView -> AuthenticatedUser : Show error message
+end
 
 
 ' Event

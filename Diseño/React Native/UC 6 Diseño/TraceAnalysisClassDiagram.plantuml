@@ -71,13 +71,13 @@ package frontend <<React Native:0.76.6>>{
     component "react-native-calendar-picker" as ReactNativeCalendarPicker << Library >>
     component "CalendarPicker" as CalendarPicker << Component >>
 
-    control "AddEventController" as AddEventController 
-    control "LocationController" as LocationController
-    control "FileController" as FileController
+    control "AddEventController" as AddEventController << TS >>
+    control "LocationController" as LocationController << TS >>
+    control "FileController" as FileController << TS >>
 
 
-    entity "EventModel" as EventModel
-    entity "LocationModel" as LocationModel
+    entity "EventModel" as EventModel << TS >>
+    entity "LocationModel" as LocationModel << TS >>
 }
 
 ' Frontend View Hierarchy
