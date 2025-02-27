@@ -1,0 +1,66 @@
+@startuml architecture_design
+skinparam ComponentBackgroundColor white
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 11
+
+
+node "Mobile Device" as mobileDevice {
+    component "Ionic App" as ionicApp << Ionic/React:7.0.0 >> {
+        component "App" as App {
+            
+        }
+        component "Web View" as WebView {
+
+        }
+
+        component "Capacitor" as Capacitor {
+            component "Native Bridge" as NativeBridge {
+                component "Capacitor JS API" as CapacitorJSAPI
+            }
+            component "Runtime" as Runtime 
+            component "Core Plugins" as CorePlugins
+            component "3rd Party Plugins" as ThirdPartyPlugins
+            component "Custom Native Code" as CustomNativeCode
+            ' Internal connections
+            NativeBridge --> Runtime
+            Runtime --> CorePlugins
+            Runtime --> ThirdPartyPlugins
+            Runtime --> CustomNativeCode
+        }
+
+        component "Hardware API" as HardwareAPI {
+
+        }
+
+        component "Device OS" as DeviceOS {
+
+        }
+        
+        ' Internal connections
+        App <--> WebView
+        WebView <--> Capacitor
+        Capacitor <-> HardwareAPI
+        Capacitor <--> DeviceOS
+        HardwareAPI <--> DeviceOS
+    }
+
+}
+
+node "Backend" as backend {
+    component "Express API" as expressAPI
+    component "Prisma Client" as prismaClient
+}
+
+node "Supabase" as supabase {
+    component "Authentication" as auth
+    component "File Storage" as fileStorage
+    component "PostgreSQL Database" as postgresDB
+}
+
+App <..[#000000]r..> expressAPI : <font color=000000>HTTP</font>
+prismaClient <.[#000000]u.> postgresDB
+App <..[#000000]l..> fileStorage
+App <..[#000000]l..> auth
+
+
+expressAPI <.[#000000]l.> prismaClient

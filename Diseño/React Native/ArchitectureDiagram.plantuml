@@ -4,7 +4,7 @@ skinparam defaultTextAlignment center
 skinparam defaultFontSize 11
 
 node "Mobile Device" as mobileDevice {
-    component "React Native App" as reactNativeApp {
+    component "React Native App" as reactNativeApp <<React Native:0.76.6>> {
          component "JavaScript Layer" as jsLayer {
             component "App" as app 
             component "node_modules" as nodeModules

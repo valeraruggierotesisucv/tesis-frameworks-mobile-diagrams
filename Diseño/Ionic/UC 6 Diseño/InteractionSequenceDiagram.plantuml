@@ -1,0 +1,212 @@
+@startuml
+skinparam style strictuml
+skinparam defaultFontSize 11
+skinparam stereotypePosition top
+
+actor "Authenticated\nUser" as AuthenticatedUser
+
+boundary "AddEventView" as AddEventView << TSX >>
+
+control "useImagePicker" as useImagePicker << Custom Hooks >>
+control "Camera" as Camera << Component >>
+control "useFilePicker" as useFilePicker << Custom Hooks >>
+control "FilePicker" as FilePicker << Component >>
+control "useAudioRecorder" as useAudioRecorder << Custom Hooks >>
+control "VoiceRecorder" as VoiceRecorder << Component >>
+control "useCurrentLocation" as useCurrentLocation << Custom Hooks >>
+control "Geolocation" as Geolocation << Component >>
+control "SupabaseClient" as SupabaseClient
+control "DocumentPicker" as DocumentPicker << Component >>
+
+control "AddEventController" as AddEventController << TS >>
+control "LocationController" as LocationController << TS >>
+control "FileController" as FileController << TS >>
+
+entity "EventModel" as EventModel << TS >>
+entity "LocationModel" as LocationModel << TS >>
+
+participant "Express API" as API << REST >>
+participant "Prisma Client" as prisma << ORM >>
+
+database supabase
+database postgresql
+
+activate AddEventView
+
+
+alt Take Picture
+    AuthenticatedUser -> AddEventView : handleOpenCamera()
+    AddEventView -> useImagePicker : handleOpenCamera()
+    activate useImagePicker
+    useImagePicker -> Camera : getPhoto(source: CameraSource.Camera)
+    activate Camera
+    Camera -> useImagePicker : image.dataUrl
+    deactivate Camera
+    useImagePicker -> AddEventView : imageUri
+    deactivate useImagePicker
+else Pick Image
+    AuthenticatedUser -> AddEventView : handleOpenGallery()
+    AddEventView -> useImagePicker : handleOpenGallery()
+    activate useImagePicker
+    useImagePicker -> Camera : getPhoto(source: CameraSource.Photo)
+    activate Camera
+    Camera -> useImagePicker : image.dataUrl
+    deactivate Camera
+    useImagePicker -> AddEventView : imageUri
+    deactivate useImagePicker
+end
+
+AuthenticatedUser -> AddEventView : setTitle()
+AuthenticatedUser -> AddEventView : setDescription()
+AuthenticatedUser -> AddEventView : setDate()
+AuthenticatedUser -> AddEventView : setStartsAt()
+AuthenticatedUser -> AddEventView : setEndsAt()
+AuthenticatedUser -> AddEventView : setCategory()
+
+alt Pick Music File
+    AuthenticatedUser -> AddEventView : handleOpenFilePicker()
+    AddEventView -> useFilePicker : handleOpenFilePicker()
+    activate useFilePicker
+    useFilePicker -> FilePicker : pickFiles()
+    activate FilePicker
+    FilePicker -> useFilePicker : result.files[0]
+    deactivate FilePicker
+    useFilePicker -> AddEventView : musicFileUri
+    deactivate useFilePicker
+else Record Audio
+    AuthenticatedUser -> AddEventView : handleStartRecording()
+    AddEventView -> useAudioRecorder : handleStartRecording()
+    activate useAudioRecorder
+    useAudioRecorder -> VoiceRecorder : startRecording()
+    activate VoiceRecorder
+    AuthenticatedUser -> AddEventView : handleStopRecording()
+    AddEventView -> useAudioRecorder : handleStopRecording()
+    useAudioRecorder -> VoiceRecorder : stopRecording()
+    VoiceRecorder -> useAudioRecorder : result.value.recordDataBase64
+    deactivate VoiceRecorder
+    useAudioRecorder -> AddEventView : audioFileUri
+    deactivate useAudioRecorder
+end
+
+AuthenticatedUser -> AddEventView : getCurrentLocation()
+AddEventView -> useCurrentLocation : getCurrentLocation()
+activate useCurrentLocation
+useCurrentLocation -> Geolocation : getCurrentPosition()
+activate Geolocation
+Geolocation -> useCurrentLocation : currentLocation
+deactivate Geolocation
+useCurrentLocation -> AddEventView : location
+deactivate useCurrentLocation
+
+AuthenticatedUser -> AddEventView : handleAddEvent()
+
+AddEventView -> FileController : uploadFile(imageUri, FileType.IMAGE)
+activate FileController
+FileController -> SupabaseClient : storage.from(EventImages).upload(imageUri)
+activate SupabaseClient
+SupabaseClient -> supabase : storage.from(EventImages).getPublicUrl(imageUri)
+activate supabase
+supabase -> SupabaseClient : publicImageUrl
+deactivate supabase
+SupabaseClient -> FileController : publicImageUrl
+deactivate SupabaseClient
+FileController -> AddEventView : imageUrl
+deactivate FileController
+
+AddEventView -> FileController : uploadFile(musicFileUri, FileType.MUSIC)
+activate FileController
+FileController -> SupabaseClient : storage.from(EventMusic).upload(musicFileUri)
+activate SupabaseClient
+SupabaseClient -> supabase : storage.from(EventMusic).getPublicUrl(musicFileUri)
+activate supabase
+supabase -> SupabaseClient : publicMusicUrl
+deactivate supabase
+SupabaseClient -> FileController : publicMusicUrl
+deactivate SupabaseClient
+FileController -> AddEventView : musicUrl
+deactivate FileController
+
+
+' Location 
+AddEventView -> LocationController : addLocation(location)
+activate LocationController
+LocationController -> LocationModel : createLocation(location)
+activate LocationModel
+
+LocationModel -> API : POST /api/locations
+activate API
+API -> prisma : location.create()
+activate prisma
+prisma -> postgresql : INSERT INTO locations
+activate postgresql
+
+alt Successful case
+    postgresql -> prisma : locationId
+    prisma -> API : location
+    API -> LocationModel : {data: location, success: true}
+    LocationModel -> LocationController : locationId
+    LocationController -> AddEventView : locationId
+else Failed case
+    postgresql -> prisma : error
+    deactivate postgresql
+    prisma -> API : error
+    deactivate prisma
+    API -> LocationModel : status(500) {error: "FAILED to create location"}
+    deactivate API
+    LocationModel -> LocationController : error
+    deactivate LocationModel
+    LocationController -> AddEventView : error
+    deactivate LocationController
+    AddEventView -> AuthenticatedUser : Show error message
+end
+
+
+' Event
+AddEventView -> AddEventController : postEvent(event)
+activate AddEventController
+
+AddEventController -> EventModel : createEvent(event)
+activate EventModel
+
+EventModel -> API : POST /api/events
+activate API
+API -> prisma : event.create()
+activate prisma
+prisma -> postgresql : INSERT INTO events
+activate postgresql
+
+alt Successful case
+    postgresql -> prisma : event
+
+    prisma -> API : event
+
+    API -> EventModel : {data: event, success: true}
+
+    EventModel -> AddEventController : event
+
+    AddEventController -> AddEventView : event
+
+    AddEventView -> AuthenticatedUser : Show success message
+else Failed case
+    postgresql -> prisma : error
+    deactivate postgresql
+    prisma -> API : error
+    deactivate prisma
+    API -> EventModel : status(500) {error: "FAILED to create event"}
+    deactivate API
+    EventModel -> AddEventController : error
+    deactivate EventModel
+    AddEventController -> AddEventView : error
+    deactivate AddEventController
+    AddEventView -> AuthenticatedUser : Show error message
+end
+deactivate AddEventView
+
+@enduml
+
+
+
+
+
+
+

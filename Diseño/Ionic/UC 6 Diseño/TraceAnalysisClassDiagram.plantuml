@@ -1,0 +1,156 @@
+@startuml TraceAnalysisClassDiagram
+skinparam style strictuml
+left to right direction
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 11
+
+
+
+package Analysis {
+    entity "EventModel" as eventModel
+    entity "LocationModel" as locationModel
+
+    boundary "AddEventView" as addEventViewAnalysis
+
+    control "FileController" as fileController
+    control "AddEventController" as addEventController
+    control "LocationController" as locationController
+
+    addEventViewAnalysis -- addEventController
+    addEventViewAnalysis -- locationController
+    addEventViewAnalysis -- fileController
+
+    addEventController -- eventModel
+    fileController -- eventModel
+    locationController -- locationModel
+}
+
+
+package frontend <<React Native:0.76.6>>{
+    boundary "AddEventView" as addEventView << TSX >>
+    boundary "AddDefaultView" as AddDefaultView << TSX >>
+    boundary "AddDateView" as AddDateView << TSX >>
+    boundary "ChooseCategoriesView" as ChooseCategoriesView << TSX >>
+
+    component "react" as React << Library >>
+    component "useState" as useState << Hook >>
+
+    component "react-router" as ReactRouter << Library >>
+    component "useHistory" as useHistory << Hook >>
+
+    component "ionic/react" as IonicReact << Library >>
+    component "IonImg" as IonImg << Component >>
+    component "IonText" as IonText << Component >>
+
+    component "react-i18next" as ReactI18next << Library >>
+    component "useTranslation" as useTranslation << Hook >>
+
+    boundary "Modal" as Modal << Custom Components >>
+    boundary "AppHeader" as AppHeader << Custom Components >>
+
+    component "useCurrentLocation" as useCurrentLocation << Custom Hooks >>
+    component "@capacitor/geolocation" as CapacitorGeolocation << Library >>
+    component "Geolocation" as Geolocation << Component >>
+
+    component "useImagePicker" as useImagePicker << Custom Hooks >>
+    component "@capacitor/camera" as CapacitorCamera << Library >>
+    component "Camera" as Camera << Component >>
+    
+    component "useFilePicker" as useFilePicker << Custom Hooks >>
+    component "@capawesome/capacitor-file-picker" as CapacitorFilePicker << Library >>
+    component "FilePicker" as FilePicker << Component >>
+    
+    component "useAudioRecorder" as useAudioRecorder << Custom Hooks >>
+    component "capacitor-voice-recorder" as CapacitorVoiceRecorder << Library >>
+    component "VoiceRecorder" as VoiceRecorder << Component >>
+
+    control "AddEventController" as AddEventController << TS >>
+    control "LocationController" as LocationController << TS >>
+    control "FileController" as FileController << TS >>
+
+    entity "EventModel" as EventModel << TS >>
+    entity "LocationModel" as LocationModel << TS >>
+}
+
+' Frontend View Hierarchy
+addEventView --> AddDefaultView 
+addEventView --> AddDateView 
+addEventView --> ChooseCategoriesView 
+addEventView --> ReactRouter
+addEventView --> IonicReact
+
+'React Router
+ReactRouter --> useHistory
+
+'Ionic React
+IonicReact --> IonImg
+IonicReact --> IonText
+
+
+' View Components
+addEventView --> ReactI18next
+addEventView --> React
+addEventView --> Modal
+addEventView --> AppHeader
+
+'AddDefaultView 
+AddDefaultView --> useImagePicker
+AddDefaultView --> useFilePicker
+AddDefaultView --> useAudioRecorder
+AddDefaultView --> useCurrentLocation
+
+'useAudioRecorder
+useAudioRecorder --> CapacitorVoiceRecorder
+CapacitorVoiceRecorder --> VoiceRecorder
+
+'useFilePicker
+useFilePicker --> CapacitorFilePicker
+CapacitorFilePicker --> FilePicker
+
+'useImagePicker
+useImagePicker --> CapacitorCamera
+CapacitorCamera --> Camera
+
+'useCurrentLocation
+useCurrentLocation --> CapacitorGeolocation
+CapacitorGeolocation --> Geolocation
+
+' React
+React --> useState
+
+' Controller relationships
+addEventView --> AddEventController
+addEventView --> LocationController
+addEventView --> FileController
+
+AddEventController --> EventModel
+LocationController --> LocationModel
+
+' Translation
+ReactI18next --> useTranslation
+
+' User interaction
+UserReg ..> addEventView
+
+addEventViewAnalysis .[#ff4b5d].> addEventView : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> AddDefaultView : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> AddDateView : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> ChooseCategoriesView : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> AppHeader : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> Modal : <font color=#ff4b5d><<trace>></font>
+addEventViewAnalysis .[#ff4b5d].> CalendarPicker : <font color=#ff4b5d><<trace>></font>
+
+fileController .[#green].> FileController : <font color=green><<trace>></font>
+addEventController .[#green].> AddEventController : <font color=green><<trace>></font>
+locationController .[#green].> LocationController : <font color=green><<trace>></font>
+fileController .[#green].> useAudioRecorder : <font color=green><<trace>></font>
+fileController .[#green].> useImagePicker : <font color=green><<trace>></font>
+fileController .[#green].> useFilePicker : <font color=green><<trace>></font>
+addEventController .[#green].> useCurrentLocation : <font color=green><<trace>></font>
+addEventController .[#green].> useTranslation : <font color=green><<trace>></font>
+
+eventModel .[#orange].> EventModel : <font color=orange><<trace>></font>
+locationModel .[#orange].> LocationModel : <font color=orange><<trace>></font>
+
+
+@enduml
