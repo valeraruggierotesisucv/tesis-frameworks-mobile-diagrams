@@ -27,8 +27,8 @@ entity "LocationModel" as LocationModel << TS >>
 participant "Express API" as API << REST >>
 participant "Prisma Client" as prisma << ORM >>
 
-database supabase
-database postgresql
+database "postgresql" as postgresql << Supabase >>
+database "FileStorage" as supabase << Supabase >>
 
 activate AddEventView
 

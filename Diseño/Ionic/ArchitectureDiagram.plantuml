@@ -57,10 +57,10 @@ node "Supabase" as supabase {
     component "PostgreSQL Database" as postgresDB
 }
 
-App <..[#000000]r..> expressAPI : <font color=000000>HTTP</font>
-prismaClient <.[#000000]u.> postgresDB
-App <..[#000000]l..> fileStorage
-App <..[#000000]l..> auth
+App <..[#000000]r..> expressAPI : <font color=000000>HTTPS</font>
+prismaClient <.[#000000]u.> postgresDB 
+App <..[#000000]l..> fileStorage : <font color=000000>HTTPS</font>
+App <..[#000000]l..> auth : <font color=000000>HTTPS</font>
 
 
 expressAPI <.[#000000]l.> prismaClient

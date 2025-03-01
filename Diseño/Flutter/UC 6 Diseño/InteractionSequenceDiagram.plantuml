@@ -25,8 +25,8 @@ entity "LocationModel" as LocationModel << Dart >>
 
 participant "Express API" as API << REST >>
 participant "Prisma Client" as prisma << ORM >>
-database postgresql
-database supabase
+database "postgresql" as postgresql << Supabase >>
+database "FileStorage" as supabase << Supabase >>
 
 
 alt Take Picture

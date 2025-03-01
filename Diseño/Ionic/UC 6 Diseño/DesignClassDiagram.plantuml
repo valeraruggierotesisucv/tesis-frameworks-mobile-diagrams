@@ -6,7 +6,7 @@ left to right direction
 actor "Authenticated\nUser" as UserReg
 
 
-package frontend <<React Native:0.76.6>>{
+package frontend << Ionic/React:7.0.0 >>{
     boundary "AddEventView" as addEventView << TSX >>
     boundary "AddDefaultView" as AddDefaultView << TSX >>
     boundary "AddDateView" as AddDateView << TSX >>

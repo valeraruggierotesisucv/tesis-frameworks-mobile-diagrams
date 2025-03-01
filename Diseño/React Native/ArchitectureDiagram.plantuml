@@ -52,12 +52,12 @@ node "Expo Application Services (EAS)" as expoServices {
     component "Expo Application Services Build" as expoApplicationServicesBuild
 }
 
-jsLayer <..[#000000]l..> expressAPI : <font color=000000>HTTP</font>
+jsLayer <..[#000000]l..> expressAPI : <font color=000000>HTTPS</font>
 prismaClient <.[#000000]u.> postgresDB
-jsLayer <.[#000000]d.> fileStorage
-jsLayer <.[#000000]d.> auth
+jsLayer <..[#000000]d..> fileStorage : <font color=000000>HTTPS</font>
+jsLayer <..[#000000]d..> auth : <font color=000000>HTTPS</font>
 
-expressAPI <.[#000000]l.> prismaClient
+expressAPI <.[#000000]l.> prismaClient : <font color=000000>HTTPS</font>
 jsLayer <.[#000000]d.> expoPushNotifications
 jsLayer <.[#000000]d.> expoApplicationServicesBuild
 

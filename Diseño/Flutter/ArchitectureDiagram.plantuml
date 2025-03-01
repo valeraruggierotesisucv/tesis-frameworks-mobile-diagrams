@@ -96,9 +96,9 @@ gestures --> foundation
 
 ' External connections
 ' embedder --> expressAPI : HTTP
-dartApp <.[#000000]u.> auth 
-dartApp <.[#000000]u.> fileStorage
-dartApp <.[#000000]r.> expressAPI
+dartApp <.[#000000]u.> auth : <font color=000000>HTTPS</font>
+dartApp <.[#000000]u.> fileStorage : <font color=000000>HTTPS</font>
+dartApp <.[#000000]r.> expressAPI : <font color=000000>HTTPS</font>
 ' dartApp --> fileStorage : Direct Storage
 
 expressAPI <.[#000000].> prismaClient
