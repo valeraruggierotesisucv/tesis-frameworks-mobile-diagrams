@@ -30,7 +30,7 @@ La aplicación esta requisitada y diseñada usando la metodología RUP. Al ser u
 ![modelo caso de uso usuario administrador](Requisitos/Casos%20de%20Uso/diagramas/UseCaseDiagramUserManagement.svg)
 
 ### Especificaciones de casos de uso
-La descripción de cada caso de uso lo podrá ver en: [Especificaciones de los casos de uso](Requisitos/CasosDeUso/UseCasesSpecification.md)
+La descripción de cada caso de uso lo podrá ver en: [Especificaciones de los casos de uso](Requisitos/Casos%20de%20Uso/UseCasesSpecification.md)
 
 ### Prototipo de pantallas
 Los prototipos de las pantallas las podrá ver en: [Prototipo en Figma](https://www.figma.com/design/DONtPlkrGIl6SPWpOyRAzo/Eventify?node-id=0-1&t=bIzspBysWjL5vKp7-1)
