@@ -9,9 +9,6 @@ Aplicación móvil implementada en 3 frameworks de desarrollo móvil distintos:
 - Flutter: https://github.com/valeraruggierotesisucv/flutter-app
 - Ionic: https://github.com/valeraruggierotesisucv/ionic-app
 
-## Motivación
-No se
-
 ## Metodología
 La aplicación esta requisitada y diseñada usando la metodología RUP. Al ser una metodología dirigida por casos de uso, se podrá realizar una traza desde los requisitos, hasta el código implementado en cada framework. Esta trazabiliad permite verificar la transformación de los requisitos en elementos de modelo sucesores, resultantes del análisis y diseño, implementación, pruebas y despliegue. De esta manera se podrá comparar cada framework y las aplicaciones resultantes de manera más efectiva.
 
