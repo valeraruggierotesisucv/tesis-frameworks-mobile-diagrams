@@ -15,7 +15,7 @@ La aplicación esta requisitada y diseñada usando la metodología RUP. Al ser u
 | <img src="img/trazabilidadCasosUsoDisciplinas.png" width=80% style="background-color:white;"><br><sub>Trazabilidad de Requisitos por disciplinas</sub> |
 | :---: |
 
-## Requisitos
+## Disciplina de Requisitos
 Dada la extensión de los casos de uso, estos fueron organizados por paquetes
 
 ![paquetes](Requisitos/Casos%20de%20Uso/diagramas/UseCaseDiagramPackages.svg)
@@ -39,7 +39,7 @@ La descripción de cada caso de uso lo podrá ver en: [Especificaciones de los c
 ### Prototipo de pantallas
 Los prototipos de las pantallas las podrá ver en: [Prototipo en Figma](https://www.figma.com/design/DONtPlkrGIl6SPWpOyRAzo/Eventify?node-id=2-197&t=Ajn1pEIF9eLvgRg2-1)
 
-## Modelo de Análisis
+## Disciplina de Análisis
 
 ### Diagrama de clases de análisis
 #### Autenticación
@@ -54,18 +54,19 @@ Los prototipos de las pantallas las podrá ver en: [Prototipo en Figma](https://
 #### Manejo de Usuarios
 ![diagrama de clases de manejo de usuarios](Análisis/Clases%20de%20Análisis/diagramas/analysisClassDiagramUserManagement.svg)
 
-### Arquitectura de análisis
+### Diagrama de Paquete de Analisis
 ![arquitectura de análisis](Análisis/Paquetes%20de%20Análisis/diagramas/analysisPackageDiagram.svg)
 
 ### Realización de análisis de casos de uso
+Se seleccionó el caso de uso UC6-Publicar Evento como ejemplo representativo de estudio. 
 
 #### Diagrama de clases de análisis de UC6 – Publicar Evento
 ![Diagrama de clases de análisis de UC6](Análisis/Clases%20de%20Análisis/UC6%20Análisis/diagramas/analysisClassDiagramUC6.svg)
 
 #### Diagrama de colaboración de análisis de UC6 – Publicar Evento
-![Diagrama de colaboración de análisis de UC6](Análisis/Clases%20de%20Análisis/UC6%20Análisis/diagramas/analysisClassDiagramUC6.svg)
+![Diagrama de colaboración de análisis de UC6](Análisis/Clases de Análisis/UC6 Análisis/diagramas/analysisColaborationDiagramUC6.svg)
 
-## Modelo de Diseño Framework React Native
+## Disciplina de Diseño
 
 ### Arquitectura de Sistema
 ![arquitectura de sistema de Framework React Native](Diseño/React%20Native/diagramas/architecture_design.svg)
