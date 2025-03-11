@@ -17,6 +17,7 @@ La aplicación esta requisitada y diseñada usando la metodología RUP. Al ser u
 
 ## Requisitos
 Dada la extensión de los casos de uso, estos fueron organizados por paquetes
+
 ![paquetes](Requisitos/Casos%20de%20Uso/diagramas/UseCaseDiagramPackages.svg)
 
 
