@@ -15,7 +15,10 @@ La aplicación esta requisitada y diseñada usando la metodología RUP. Al ser u
 | <img src="img/trazabilidadCasosUsoDisciplinas.png" width=80% style="background-color:white;"><br><sub>Trazabilidad de Requisitos por disciplinas</sub> |
 | :---: |
 
-## Modelo de Casos de uso
+## Requisitos
+Dada la extensión de los casos de uso, estos fueron organizados por paquetes
+![paquetes](Requisitos/Casos%20de%20Uso/diagramas/UseCaseDiagramPackages.svg)
+
 
 ### Autenticación
 ![modelo caso de uso usuario no registrado](Requisitos/Casos%20de%20Uso/diagramas/UseCaseDiagramAutentication.svg)
