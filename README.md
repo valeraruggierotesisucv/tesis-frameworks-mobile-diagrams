@@ -35,10 +35,6 @@ La descripción de cada caso de uso lo podrá ver en: [Especificaciones de los c
 ### Prototipo de pantallas
 Los prototipos de las pantallas las podrá ver en: [Prototipo en Figma](https://www.figma.com/design/DONtPlkrGIl6SPWpOyRAzo/Eventify?node-id=2-197&t=Ajn1pEIF9eLvgRg2-1)
 
-### Trazabilidad entre pantallas y casos de uso
-| <img src="scenariosView/useCaseModel/prototypeUseCaseTrace/prototypeTrace.svg" width=80% style="background-color:white;"> |
-| :---: |
-
 ## Modelo de Análisis
 
 ### Diagrama de clases de análisis
