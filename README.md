@@ -68,8 +68,8 @@ Se seleccionó el caso de uso UC6-Publicar Evento como ejemplo representativo de
 ![Diagrama de colaboración de análisis de UC6](An%C3%A1lisis/Clases%20de%20An%C3%A1lisis/UC6%20An%C3%A1lisis/diagramas/analysisColaborationDiagramUC6.svg).
 
 ## Disciplina de Diseño
-
-### Arquitectura de Sistema
+### React Native
+### Arquitectura del Sistema
 ![arquitectura de sistema de Framework React Native](Diseño/React%20Native/diagramas/architecture_design.svg)
 
 ### Caso de Estudio UC6 - Publicar Evento
