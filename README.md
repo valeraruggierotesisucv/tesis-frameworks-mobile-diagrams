@@ -68,7 +68,9 @@ Se seleccionó el caso de uso UC6-Publicar Evento como ejemplo representativo de
 ![Diagrama de colaboración de análisis de UC6](An%C3%A1lisis/Clases%20de%20An%C3%A1lisis/UC6%20An%C3%A1lisis/diagramas/analysisColaborationDiagramUC6.svg).
 
 ## Disciplina de Diseño
-### React Native
+Se realiza para cada uno de los frameworks:
+
+## React Native
 ### Arquitectura del Sistema
 ![arquitectura de sistema de Framework React Native](Diseño/React%20Native/diagramas/architecture_design.svg)
 
@@ -84,9 +86,9 @@ Se seleccionó el caso de uso UC6-Publicar Evento como ejemplo representativo de
 ![Trazabilidad con Clases de Análisis UC6 - React Native](Diseño/React%20Native/UC%206%20Diseño/diagramas/TraceAnalysisClassDiagram.svg)
 
 
-## Modelo de Diseño Framework Flutter
+##  Flutter
 
-### Arquitectura de Sistema
+### Arquitectura del Sistema
 ![arquitectura de sistema de Framework Flutter](Diseño/Flutter/diagramas/architecture_design.svg)
 
 ### Caso de Estudio UC6 - Publicar Evento
@@ -101,9 +103,9 @@ Se seleccionó el caso de uso UC6-Publicar Evento como ejemplo representativo de
 ![Trazabilidad con Clases de Análisis UC6 - Flutter](Diseño/Flutter/UC%206%20Diseño/diagramas/TraceAnalysisClassDiagram.svg)
 
 
-## Modelo de Diseño Framework Ionic
+## Ionic
 
-### Arquitectura de Sistema
+### Arquitectura del Sistema
 ![arquitectura de sistema de Framework Ionic](Diseño/Ionic/diagramas/architecture_design.svg)
 
 ### Caso de Estudio UC6 - Publicar Evento
