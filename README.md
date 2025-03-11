@@ -18,8 +18,9 @@ La aplicación esta requisitada y diseñada usando la metodología RUP. Al ser u
 ## Disciplina de Requisitos
 Dada la extensión de los casos de uso, estos fueron organizados por paquetes
 
-![paquetes](Requisitos/Casos%20de%20Uso/diagramas/UseCaseDiagramPackages.svg)
+### Casos de Uso
 
+![paquetes](Requisitos/Casos%20de%20Uso/diagramas/UseCaseDiagramPackages.svg)
 
 ### Autenticación
 ![modelo caso de uso usuario no registrado](Requisitos/Casos%20de%20Uso/diagramas/UseCaseDiagramAutentication.svg)
@@ -54,7 +55,7 @@ Los prototipos de las pantallas las podrá ver en: [Prototipo en Figma](https://
 #### Manejo de Usuarios
 ![diagrama de clases de manejo de usuarios](Análisis/Clases%20de%20Análisis/diagramas/analysisClassDiagramUserManagement.svg)
 
-### Diagrama de Paquete de Analisis
+### Diagrama de Paquete de Análisis
 ![arquitectura de análisis](Análisis/Paquetes%20de%20Análisis/diagramas/analysisPackageDiagram.svg)
 
 ### Realización de análisis de casos de uso
@@ -64,7 +65,7 @@ Se seleccionó el caso de uso UC6-Publicar Evento como ejemplo representativo de
 ![Diagrama de clases de análisis de UC6](Análisis/Clases%20de%20Análisis/UC6%20Análisis/diagramas/analysisClassDiagramUC6.svg)
 
 #### Diagrama de colaboración de análisis de UC6 – Publicar Evento
-![Diagrama de colaboración de análisis de UC6](Análisis/Clases de Análisis/UC6 Análisis/diagramas/analysisColaborationDiagramUC6.svg)
+![Diagrama de colaboración de análisis de UC6](An%C3%A1lisis/Clases%20de%20An%C3%A1lisis/UC6%20An%C3%A1lisis/diagramas/analysisColaborationDiagramUC6.svg).
 
 ## Disciplina de Diseño
 
