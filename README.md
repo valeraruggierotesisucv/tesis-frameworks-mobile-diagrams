@@ -1,4 +1,4 @@
-# Comparación y Evaluación de cinco Frameworks Web de Backend
+# Comparación y Evaluación de Frameworks de Desarrollo Móvil
 
 ## Descripción Aplicación
 Es una aplicación móvil diseñada para la gestión de eventos e interacción entre usuarios. Incluye funcionalidades esenciales como la administración de eventos, la conexión entre usuarios y características sociales, tales como seguidores, notificaciones y comentarios.
