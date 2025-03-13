@@ -1,4 +1,4 @@
-# Comparación y Evaluación de cinco Frameworks Web de Backend
+# Comparación y Evaluación de Frameworks de Desarrollo Móvil
 
 ## Descripción Aplicación
 Es una aplicación móvil diseñada para la gestión de eventos e interacción entre usuarios. Incluye funcionalidades esenciales como la administración de eventos, la conexión entre usuarios y características sociales, tales como seguidores, notificaciones y comentarios.
@@ -15,7 +15,12 @@ La aplicación esta requisitada y diseñada usando la metodología RUP. Al ser u
 | <img src="img/trazabilidadCasosUsoDisciplinas.png" width=80% style="background-color:white;"><br><sub>Trazabilidad de Requisitos por disciplinas</sub> |
 | :---: |
 
-## Modelo de Casos de uso
+## Disciplina de Requisitos
+Dada la extensión de los casos de uso, estos fueron organizados por paquetes
+
+### Casos de Uso
+
+![paquetes](Requisitos/Casos%20de%20Uso/diagramas/UseCaseDiagramPackages.svg)
 
 ### Autenticación
 ![modelo caso de uso usuario no registrado](Requisitos/Casos%20de%20Uso/diagramas/UseCaseDiagramAutentication.svg)
@@ -33,13 +38,9 @@ La aplicación esta requisitada y diseñada usando la metodología RUP. Al ser u
 La descripción de cada caso de uso lo podrá ver en: [Especificaciones de los casos de uso](Requisitos/Casos%20de%20Uso/UseCasesSpecification.md)
 
 ### Prototipo de pantallas
-Los prototipos de las pantallas las podrá ver en: [Prototipo en Figma](https://www.figma.com/design/DONtPlkrGIl6SPWpOyRAzo/Eventify?node-id=0-1&t=bIzspBysWjL5vKp7-1)
+Los prototipos de las pantallas las podrá ver en: [Prototipo en Figma](https://www.figma.com/design/DONtPlkrGIl6SPWpOyRAzo/Eventify?node-id=2-197&t=Ajn1pEIF9eLvgRg2-1)
 
-### Trazabilidad entre pantallas y casos de uso
-| <img src="scenariosView/useCaseModel/prototypeUseCaseTrace/prototypeTrace.svg" width=80% style="background-color:white;"> |
-| :---: |
-
-## Modelo de Análisis
+## Disciplina de Análisis
 
 ### Diagrama de clases de análisis
 #### Autenticación
@@ -54,20 +55,23 @@ Los prototipos de las pantallas las podrá ver en: [Prototipo en Figma](https://
 #### Manejo de Usuarios
 ![diagrama de clases de manejo de usuarios](Análisis/Clases%20de%20Análisis/diagramas/analysisClassDiagramUserManagement.svg)
 
-### Arquitectura de análisis
+### Diagrama de Paquete de Análisis
 ![arquitectura de análisis](Análisis/Paquetes%20de%20Análisis/diagramas/analysisPackageDiagram.svg)
 
 ### Realización de análisis de casos de uso
+Se seleccionó el caso de uso UC6-Publicar Evento como ejemplo representativo de estudio. 
 
 #### Diagrama de clases de análisis de UC6 – Publicar Evento
 ![Diagrama de clases de análisis de UC6](Análisis/Clases%20de%20Análisis/UC6%20Análisis/diagramas/analysisClassDiagramUC6.svg)
 
 #### Diagrama de colaboración de análisis de UC6 – Publicar Evento
-![Diagrama de colaboración de análisis de UC6](Análisis/Clases%20de%20Análisis/UC6%20Análisis/diagramas/analysisClassDiagramUC6.svg)
+![Diagrama de colaboración de análisis de UC6](An%C3%A1lisis/Clases%20de%20An%C3%A1lisis/UC6%20An%C3%A1lisis/diagramas/analysisColaborationDiagramUC6.svg).
 
-## Modelo de Diseño Framework React Native
+## Disciplina de Diseño
+Se realiza para cada uno de los frameworks:
 
-### Arquitectura de Sistema
+## React Native
+### Arquitectura del Sistema
 ![arquitectura de sistema de Framework React Native](Diseño/React%20Native/diagramas/architecture_design.svg)
 
 ### Caso de Estudio UC6 - Publicar Evento
@@ -82,9 +86,9 @@ Los prototipos de las pantallas las podrá ver en: [Prototipo en Figma](https://
 ![Trazabilidad con Clases de Análisis UC6 - React Native](Diseño/React%20Native/UC%206%20Diseño/diagramas/TraceAnalysisClassDiagram.svg)
 
 
-## Modelo de Diseño Framework Flutter
+##  Flutter
 
-### Arquitectura de Sistema
+### Arquitectura del Sistema
 ![arquitectura de sistema de Framework Flutter](Diseño/Flutter/diagramas/architecture_design.svg)
 
 ### Caso de Estudio UC6 - Publicar Evento
@@ -99,9 +103,9 @@ Los prototipos de las pantallas las podrá ver en: [Prototipo en Figma](https://
 ![Trazabilidad con Clases de Análisis UC6 - Flutter](Diseño/Flutter/UC%206%20Diseño/diagramas/TraceAnalysisClassDiagram.svg)
 
 
-## Modelo de Diseño Framework Ionic
+## Ionic
 
-### Arquitectura de Sistema
+### Arquitectura del Sistema
 ![arquitectura de sistema de Framework Ionic](Diseño/Ionic/diagramas/architecture_design.svg)
 
 ### Caso de Estudio UC6 - Publicar Evento
